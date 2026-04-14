@@ -1,0 +1,720 @@
+{
+  "sprints": [
+    {
+      "id": "s1",
+      "label": "Sprint 1",
+      "dates": "Apr 13–24",
+      "status": "current"
+    },
+    {
+      "id": "s2",
+      "label": "Sprint 2",
+      "dates": "Apr 27–May 8",
+      "status": "upcoming"
+    },
+    {
+      "id": "s3",
+      "label": "Sprint 3",
+      "dates": "May 11–22",
+      "status": "upcoming"
+    },
+    {
+      "id": "s4",
+      "label": "Sprint 4",
+      "dates": "May 25–Jun 5",
+      "status": "upcoming"
+    },
+    {
+      "id": "s5",
+      "label": "Sprint 5",
+      "dates": "Jun 8–19",
+      "status": "upcoming"
+    },
+    {
+      "id": "s6",
+      "label": "Sprint 6",
+      "dates": "Jun 22–Jul 3",
+      "status": "upcoming"
+    }
+  ],
+  "lanes": [
+    {
+      "id": "kr1",
+      "label": "KR1",
+      "sublabel": "Findability",
+      "color": "#1D4ED8",
+      "bg": "#EFF6FF",
+      "target": "Website Apr 30\nSEO/GEO via Claude\nComparison pages"
+    },
+    {
+      "id": "kr2",
+      "label": "KR2",
+      "sublabel": "Credibility",
+      "color": "#16A34A",
+      "bg": "#F0FDF4",
+      "target": "3 case studies live\n15+ G2/Capterra reviews by Jun 30"
+    },
+    {
+      "id": "kr3",
+      "label": "KR3",
+      "sublabel": "DemandGen",
+      "color": "#EA580C",
+      "bg": "#FFF7ED",
+      "target": "120 qualified MQLs\n≥30% from target accounts"
+    },
+    {
+      "id": "mx",
+      "label": "📊",
+      "sublabel": "Metrics & Reporting",
+      "color": "#475569",
+      "bg": "#F8FAFC",
+      "target": "Weekly KPI pulse\nBi-weekly KR review (every sprint end)"
+    },
+    {
+      "id": "ai",
+      "label": "🤖",
+      "sublabel": "Claude Skills",
+      "color": "#7E22CE",
+      "bg": "#FAF5FF",
+      "target": "3 skills/sprint\n1 per team member"
+    }
+  ],
+  "events": {
+    "s1": [
+      {
+        "text": "Zendesk Relate Prep: Printables, Stickers, etc.",
+        "date": "",
+        "anchor": false
+      },
+      {
+        "text": "Q2 Dinner Line-up Strategy",
+        "date": "",
+        "anchor": false
+      }
+    ],
+    "s2": [
+      {
+        "text": "🍽️ Dinner SF / Bay Area",
+        "date": "Apr 29",
+        "anchor": false
+      },
+      {
+        "text": "🍽️ Dinner Nashville",
+        "date": "May 7",
+        "anchor": false
+      }
+    ],
+    "s3": [
+      {
+        "text": "⭐ Zendesk Relate — Happy Hour Denver",
+        "date": "May 19 — Birdie Sponsor",
+        "anchor": true
+      }
+    ],
+    "s4": [
+      {
+        "text": "🍽️ Dinner Toronto",
+        "date": "May 27",
+        "anchor": false
+      }
+    ],
+    "s5": [],
+    "s6": [
+      {
+        "text": "CCW Vegas",
+        "date": "Jun 22-25",
+        "anchor": true
+      }
+    ]
+  },
+  "cards": {
+    "kr1-s1": [
+      {
+        "id": "k1s1a",
+        "text": "New Site: Finalize Copy & Images + Webflow ready",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k1s1b",
+        "text": "🏗️ Build vs Buy page — Live (Blog)",
+        "type": "milestone",
+        "detail": ""
+      },
+      {
+        "id": "k1s1c",
+        "text": "Comparison pages → prep copy for 3 pages",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k1s1d",
+        "text": "SEO/GEO keywords/themes planning",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "c17761900251466rq5b",
+        "text": "Content Calendar — with distribution plan",
+        "type": "milestone",
+        "detail": ""
+      },
+      {
+        "id": "c1776191174227sog5i",
+        "text": "SEO/GEO Claude skill",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "kr1-s2": [
+      {
+        "id": "k1s2a",
+        "text": "🚀 Website Launch — Apr 30",
+        "type": "milestone",
+        "detail": "\"Beyond Customer Intelligence\" + VoC+QA above fold"
+      },
+      {
+        "id": "k1s2b",
+        "text": "Unwrap comparison page — live",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k1s2c",
+        "text": "SEO meta tags + schema optimization",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "kr1-s3": [
+      {
+        "id": "k1s3a",
+        "text": "Chattermill comparison page — live",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k1s3b",
+        "text": "GEO: optimize for AI-generated answers",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k1s3c",
+        "text": "Internal linking across comparison pages",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "kr1-s4": [
+      {
+        "id": "k1s4a",
+        "text": "UnitQ comparison page — live",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k1s4b",
+        "text": "1st keyword ranking review",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k1s4c",
+        "text": "Build vs Buy page — optimized final",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "kr1-s5": [
+      {
+        "id": "k1s5a",
+        "text": "All 5 comparison pages: SEO pass",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k1s5b",
+        "text": "GEO audit: Birdie in AI answers check",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k1s5c",
+        "text": "Target account visit tracking review",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "kr1-s6": [
+      {
+        "id": "k1s6a",
+        "text": "📊 Q2 SEO/GEO audit",
+        "type": "milestone",
+        "detail": "Ranking gains + AI answer presence → Q3 plan"
+      },
+      {
+        "id": "k1s6b",
+        "text": "Hand-off comparison page template to CS",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "kr2-s1": [
+      {
+        "id": "k2s1b",
+        "text": "G2 activation with customers (Review Hackaton)",
+        "type": "milestone",
+        "detail": ""
+      },
+      {
+        "id": "k2s1c",
+        "text": "Content cadence kick-off (2–3×/wk)",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "c1776187282055dah85",
+        "text": "New LinkedIn Headers (Design)",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "c17761949655868np9n",
+        "text": "G2/Capterra profile claim + update",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "kr2-s2": [
+      {
+        "id": "k2s2a",
+        "text": "CS #1: draft + approval",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k2s2b",
+        "text": "LinkedIn: Founder POV + outcome stories live",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k2s2c",
+        "text": "G2 checkpoint: 3–5 reviews",
+        "type": "event",
+        "detail": ""
+      },
+      {
+        "id": "c1776190540197toluh",
+        "text": "New LinkedIn Headers (Published)",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "kr2-s3": [
+      {
+        "id": "k2s3a",
+        "text": "✅ CS #1 live on website + sent to Sales",
+        "type": "milestone",
+        "detail": ""
+      },
+      {
+        "id": "k2s3b",
+        "text": "CS #2: draft + approval",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k2s3c",
+        "text": "G2 checkpoint: 7–8 reviews",
+        "type": "event",
+        "detail": ""
+      }
+    ],
+    "kr2-s4": [
+      {
+        "id": "k2s4a",
+        "text": "✅ CS #2 live on website",
+        "type": "milestone",
+        "detail": ""
+      },
+      {
+        "id": "k2s4b",
+        "text": "CS #3: draft + approval",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k2s4c",
+        "text": "G2 checkpoint: 11–12 reviews",
+        "type": "event",
+        "detail": ""
+      }
+    ],
+    "kr2-s5": [
+      {
+        "id": "k2s5b",
+        "text": "G2 checkpoint: 13–14 reviews",
+        "type": "event",
+        "detail": ""
+      },
+      {
+        "id": "k2s6a",
+        "text": "✅ CS #3 live — all 3 delivered",
+        "type": "milestone",
+        "detail": "Full Sales kit distributed"
+      }
+    ],
+    "kr2-s6": [
+      {
+        "id": "k2s6b",
+        "text": "🎯 15+ G2/Capterra reviews hit",
+        "type": "milestone",
+        "detail": ""
+      }
+    ],
+    "kr3-s1": [
+      {
+        "id": "k3s1b",
+        "text": "ABM account list finalized + Q2 priorities",
+        "type": "milestone",
+        "detail": ""
+      },
+      {
+        "id": "k3s1c",
+        "text": "LinkedIn Ads: Q1 Review/learnings",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k3s1d",
+        "text": "Webinar 1: resume promotion",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "c1776179528229m20vl",
+        "text": "Webinar 2: topic selection + guest invites",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "c1776189885586t2v8q",
+        "text": "Google Ads: Q1 Review/learnings",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "kr3-s2": [
+      {
+        "id": "k3s2b",
+        "text": "Accuracy Gap Report: writing begins",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k3s3a",
+        "text": "🎯 Webinar 1 — May",
+        "type": "milestone",
+        "detail": "Customer CX story · 20-min + Q&A → case study + clips"
+      },
+      {
+        "id": "k3s4b",
+        "text": "Webinar 2: speaker locked + promotion kick-off",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "kr3-s3": [
+      {
+        "id": "k3s3b",
+        "text": "Accuracy Gap Report: gated launch",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k3s3c",
+        "text": "Post-Zendesk Relate: ABM follow-up sequences",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k3s5c",
+        "text": "LinkedIn Ads: retargeting layer activated",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k3s4a",
+        "text": "Webinar 1 gated recording → MQL capture",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "kr3-s4": [
+      {
+        "id": "k3s4c",
+        "text": "MQL pace check: ≥50% of 120 target",
+        "type": "event",
+        "detail": ""
+      },
+      {
+        "id": "k3s6a",
+        "text": "🎯 Webinar 2 — June",
+        "type": "milestone",
+        "detail": "2nd customer story · gated recording"
+      }
+    ],
+    "kr3-s5": [
+      {
+        "id": "k3s5a",
+        "text": "Webinar 2 registration page live (gated)",
+        "type": "task",
+        "detail": ""
+      },
+      {
+        "id": "k3s5b",
+        "text": "ABM sequences: 3rd+ touch for top accounts",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "kr3-s6": [
+      {
+        "id": "k3s6b",
+        "text": "📊 Q2 Lead Harvest",
+        "type": "milestone",
+        "detail": "120 MQL target · Sales handoff + pipeline review"
+      }
+    ],
+    "mx-s1": [
+      {
+        "id": "ms1a",
+        "text": "📍 Baseline capture",
+        "type": "milestone",
+        "detail": "Traffic · G2 count · LinkedIn followers · MQL baseline · Ads benchmark"
+      },
+      {
+        "id": "ms1b",
+        "text": "🔁 Weekly KPI pulse — set up template",
+        "type": "metric",
+        "detail": ""
+      },
+      {
+        "id": "ms1c",
+        "text": "📋 Sprint KR Review template created",
+        "type": "metric",
+        "detail": ""
+      }
+    ],
+    "mx-s2": [
+      {
+        "id": "ms2a",
+        "text": "🔁 Weekly KPI pulse (ongoing)",
+        "type": "metric",
+        "detail": ""
+      },
+      {
+        "id": "ms2b",
+        "text": "📋 Sprint 1→2 KR review",
+        "type": "milestone",
+        "detail": ""
+      },
+      {
+        "id": "ms2c",
+        "text": "Google Ads: cost-per-lead baseline set",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "mx-s3": [
+      {
+        "id": "ms3a",
+        "text": "🔁 Weekly KPI pulse (ongoing)",
+        "type": "metric",
+        "detail": ""
+      },
+      {
+        "id": "ms3b",
+        "text": "📋 Sprint 2→3 KR review",
+        "type": "milestone",
+        "detail": ""
+      },
+      {
+        "id": "ms3c",
+        "text": "Webinar 1 MQL attribution report",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "mx-s4": [
+      {
+        "id": "ms4a",
+        "text": "🔁 Weekly KPI pulse (ongoing)",
+        "type": "metric",
+        "detail": ""
+      },
+      {
+        "id": "ms4b",
+        "text": "📋 Sprint 3→4 KR review",
+        "type": "milestone",
+        "detail": ""
+      },
+      {
+        "id": "ms4c",
+        "text": "Mid-quarter exec report: KR pace vs target",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "mx-s5": [
+      {
+        "id": "ms5a",
+        "text": "🔁 Weekly KPI pulse (ongoing)",
+        "type": "metric",
+        "detail": ""
+      },
+      {
+        "id": "ms5b",
+        "text": "📋 Sprint 4→5 KR review",
+        "type": "milestone",
+        "detail": ""
+      },
+      {
+        "id": "ms5c",
+        "text": "SEO/GEO: first ranking movement report",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "mx-s6": [
+      {
+        "id": "ms6a",
+        "text": "🔁 Final weekly KPI pulse",
+        "type": "metric",
+        "detail": ""
+      },
+      {
+        "id": "ms6b",
+        "text": "📋 Q2 KR final review — all 3 KRs",
+        "type": "milestone",
+        "detail": "Exec presentation · Q3 hand-off plan"
+      }
+    ],
+    "ai-s1": [
+      {
+        "id": "as1a",
+        "text": "🏦 Build Skills Bank",
+        "type": "milestone",
+        "detail": "All ideas catalogued: SEO optimizer · CS draft builder · MQL screener · LinkedIn formatter · KPI reporter · Email automator · Comparison page gen · Brief generator · Review requester · Ad copy tester"
+      },
+      {
+        "id": "as1b",
+        "text": "Sprint 1 first picks — 3 chosen by team",
+        "type": "ai",
+        "detail": ""
+      }
+    ],
+    "ai-s2": [
+      {
+        "id": "as2a",
+        "text": "Team member 1 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      },
+      {
+        "id": "as2b",
+        "text": "Team member 2 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      },
+      {
+        "id": "as2c",
+        "text": "Team member 3 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      }
+    ],
+    "ai-s3": [
+      {
+        "id": "as3a",
+        "text": "Team member 1 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      },
+      {
+        "id": "as3b",
+        "text": "Team member 2 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      },
+      {
+        "id": "as3c",
+        "text": "Team member 3 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      }
+    ],
+    "ai-s4": [
+      {
+        "id": "as4a",
+        "text": "Team member 1 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      },
+      {
+        "id": "as4b",
+        "text": "Team member 2 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      },
+      {
+        "id": "as4c",
+        "text": "Team member 3 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      }
+    ],
+    "ai-s5": [
+      {
+        "id": "as5a",
+        "text": "Team member 1 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      },
+      {
+        "id": "as5b",
+        "text": "Team member 2 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      },
+      {
+        "id": "as5c",
+        "text": "Team member 3 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      }
+    ],
+    "ai-s6": [
+      {
+        "id": "as6a",
+        "text": "Team member 1 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      },
+      {
+        "id": "as6b",
+        "text": "Team member 2 — skill TBD from bank",
+        "type": "ai",
+        "detail": ""
+      },
+      {
+        "id": "as6c",
+        "text": "📚 Skills retrospective",
+        "type": "milestone",
+        "detail": "Which skills saved the most time? → Q3 bank"
+      }
+    ]
+  }
+}
