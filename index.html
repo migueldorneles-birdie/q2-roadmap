@@ -1,9 +1,1193 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Interactive Q2 Roadmap</title>
+  <meta charset="UTF-8">
+  <title>Birdie Q2 Roadmap — Interactive</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:   #1D4ED8; --blue-lt: #EFF6FF; --blue-md: #DBEAFE;
+      --green:  #16A34A; --green-lt:#F0FDF4; --green-md:#DCFCE7;
+      --orange: #EA580C; --orange-lt:#FFF7ED; --orange-md:#FFEDD5;
+      --slate:  #475569; --slate-lt: #F8FAFC; --slate-md:#E2E8F0;
+      --purple: #7E22CE; --purple-lt:#FAF5FF; --purple-md:#F3E8FF;
+      --radius: 7px; --shadow: 0 1px 4px rgba(0,0,0,0.09);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #F0F2F5; color: #111827;
+      min-height: 100vh; padding: 24px 20px 48px;
+    }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 14px; flex-wrap: wrap;
+    }
+    .toolbar-title {
+      display: flex; align-items: center; gap: 10px; flex: 1;
+    }
+    .logo {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, #FF6B35, #E65100);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; box-shadow: 0 3px 10px rgba(230,81,0,0.3);
+    }
+    .title-text h1 { font-size: 19px; font-weight: 800; color: #111827; line-height: 1.2; }
+    .title-text p  { font-size: 11.5px; color: #6B7280; margin-top: 2px; }
+    .toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn {
+      padding: 6px 14px; border-radius: 8px; font-size: 11.5px; font-weight: 600;
+      cursor: pointer; border: 1px solid; transition: all 0.15s;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .btn-primary  { background: #111827; color: white; border-color: #111827; }
+    .btn-primary:hover { background: #374151; }
+    .btn-outline  { background: white; color: #374151; border-color: #D1D5DB; }
+    .btn-outline:hover { background: #F9FAFB; }
+    .btn-danger   { background: white; color: #DC2626; border-color: #FCA5A5; }
+    .btn-danger:hover { background: #FEF2F2; }
+    .saved-indicator {
+      font-size: 11px; color: #10B981; font-weight: 600;
+      opacity: 0; transition: opacity 0.5s; margin-left: 4px;
+    }
+    .saved-indicator.show { opacity: 1; }
+
+    /* ── Legend ── */
+    .legend {
+      display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+      margin-bottom: 14px; padding: 10px 16px;
+      background: white; border-radius: 10px; box-shadow: var(--shadow);
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-dot { width: 9px; height: 9px; border-radius: 3px; flex-shrink: 0; }
+    .legend-label { font-size: 11px; font-weight: 600; color: #374151; }
+    .legend-sep { width: 1px; height: 16px; background: #E5E7EB; }
+    .legend-hint { font-size: 10.5px; color: #9CA3AF; }
+
+    /* ── Scroll wrap ── */
+    .scroll-wrap { overflow-x: auto; }
+
+    /* ── Grid ── */
+    .grid-wrap {
+      background: white; border-radius: 13px;
+      box-shadow: var(--shadow); overflow: hidden; min-width: 1020px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 152px repeat(6, 1fr);
+    }
+
+    /* Sprint headers */
+    .sprint-corner {
+      padding: 13px 11px; background: #F9FAFB;
+      border-bottom: 2px solid #E5E7EB;
+      font-size: 9.5px; font-weight: 700; color: #9CA3AF;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      display: flex; align-items: center;
+    }
+    .sprint-header {
+      padding: 11px 8px; text-align: center;
+      border-left: 1px solid #E5E7EB;
+      border-bottom: 2px solid #E5E7EB;
+      position: relative;
+      background: white;
+    }
+    .sprint-header.current { background: #FFFBF5; }
+    .sprint-bar {
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 42px; height: 3px; border-radius: 0 0 4px 4px;
+    }
+    .sprint-bar.current { background: #FF6B35; }
+    .sprint-num { font-size: 12px; font-weight: 700; }
+    .sprint-num.current { color: #E65100; }
+    .sprint-num.upcoming { color: #111827; }
+    .sprint-dates { font-size: 10px; color: #9CA3AF; margin-top: 2px; }
+    .sprint-tag {
+      margin-top: 4px; display: inline-block;
+      padding: 2px 7px; border-radius: 999px; font-size: 9px; font-weight: 700;
+    }
+    .sprint-tag.current { background: #FEF3C7; color: #D97706; }
+
+    /* Lane label */
+    .lane-label {
+      padding: 11px 10px;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      min-height: 100px;
+      border-bottom: 1px solid #F0F0F0;
+    }
+    .lane-badge {
+      display: inline-block; padding: 2px 6px; border-radius: 5px;
+      font-size: 10px; font-weight: 800; letter-spacing: 0.04em; margin-bottom: 2px;
+    }
+    .lane-name  { font-size: 10.5px; font-weight: 600; margin-top: 1px; }
+    .lane-target { font-size: 9px; color: #9CA3AF; margin-top: 5px; line-height: 1.5; list-style: none; padding: 0; }
+    .lane-target li { display: flex; align-items: flex-start; gap: 4px; margin-bottom: 1px; }
+    .lane-target li::before { content: '•'; flex-shrink: 0; opacity: 0.5; }
+
+    /* Lane cells */
+    .lane-cell {
+      padding: 8px 7px;
+      border-left: 1px solid #F3F4F6;
+      border-bottom: 1px solid #F0F0F0;
+      display: flex; flex-direction: column; gap: 4px;
+      position: relative; min-height: 80px;
+      transition: background 0.15s;
+    }
+    .lane-cell.last-row  { border-bottom: none; }
+    .lane-cell.drag-over { background: #F0F9FF !important; outline: 2px dashed #60A5FA; outline-offset: -3px; }
+
+    /* Cards */
+    .card {
+      padding: 4px 7px; border-radius: 6px;
+      font-size: 10px; line-height: 1.4;
+      position: relative; cursor: grab;
+      transition: box-shadow 0.12s, transform 0.12s;
+      user-select: none;
+    }
+    .card:active { cursor: grabbing; }
+    .card.dragging { opacity: 0.35; transform: scale(0.97); }
+    .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+    .card-text {
+      display: block; outline: none;
+      border-radius: 3px; padding: 1px 2px; margin: -1px -2px;
+    }
+    .card-text[contenteditable="true"] {
+      background: rgba(255,255,255,0.6);
+      box-shadow: 0 0 0 2px rgba(99,102,241,0.4);
+      cursor: text; white-space: pre-wrap;
+    }
+    .card-detail {
+      display: block; font-size: 9px; opacity: 0.7;
+      margin-top: 2px; cursor: text; outline: none;
+    }
+    .card-detail[contenteditable="true"] {
+      background: rgba(255,255,255,0.5);
+      box-shadow: 0 0 0 1px rgba(99,102,241,0.3);
+    }
+    .card-actions {
+      position: absolute; top: 3px; right: 3px;
+      display: none; gap: 2px; align-items: center;
+    }
+    .card:hover .card-actions { display: flex; }
+    .card-btn {
+      width: 16px; height: 16px; border-radius: 3px;
+      border: none; cursor: pointer; font-size: 9px;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0.7; transition: opacity 0.1s;
+    }
+    .card-btn:hover { opacity: 1; }
+    .card-btn-type { background: rgba(255,255,255,0.7); color: #374151; font-size: 8px; }
+    .card-btn-del  { background: rgba(239,68,68,0.15); color: #DC2626; }
+
+    /* Card type styles per lane+type */
+    .card[data-lane="kr1"][data-type="task"]      { background: #EFF6FF; color: #1E3A8A; }
+    .card[data-lane="kr1"][data-type="milestone"] { background: #1D4ED8; color: white; font-weight: 700; }
+    .card[data-lane="kr1"][data-type="event"]     { background: #DBEAFE; color: #1E40AF; border: 1px solid #93C5FD; }
+    .card[data-lane="kr2"][data-type="task"]      { background: #DCFCE7; color: #166534; }
+    .card[data-lane="kr2"][data-type="milestone"] { background: #16A34A; color: white; font-weight: 700; }
+    .card[data-lane="kr2"][data-type="event"]     { background: #BBF7D0; color: #14532D; border: 1px solid #86EFAC; }
+    .card[data-lane="kr3"][data-type="task"]      { background: #FFEDD5; color: #7C2D12; }
+    .card[data-lane="kr3"][data-type="milestone"] { background: #EA580C; color: white; font-weight: 700; }
+    .card[data-lane="kr3"][data-type="event"]     { background: #FED7AA; color: #9A3412; border: 1px solid #FDBA74; }
+    .card[data-lane="mx"][data-type="task"]       { background: #F1F5F9; color: #334155; }
+    .card[data-lane="mx"][data-type="milestone"]  { background: #475569; color: white; font-weight: 700; }
+    .card[data-lane="mx"][data-type="metric"]     { background: #E2E8F0; color: #1E293B; border: 1px solid #94A3B8; }
+    .card[data-lane="ai"][data-type="task"]       { background: #FAF5FF; color: #581C87; }
+    .card[data-lane="ai"][data-type="milestone"]  { background: #7E22CE; color: white; font-weight: 700; }
+    .card[data-lane="ai"][data-type="ai"]         { background: #F3E8FF; color: #6B21A8; border: 1px dashed #C084FC; }
+
+    /* Add card button */
+    .add-card-btn {
+      margin-top: 2px; padding: 4px 8px;
+      border: 1px dashed #D1D5DB; border-radius: 6px;
+      background: transparent; color: #9CA3AF;
+      font-size: 10px; cursor: pointer; width: 100%;
+      text-align: left; transition: all 0.15s;
+    }
+    .add-card-btn:hover { border-color: #6B7280; color: #374151; background: #F9FAFB; }
+
+    /* Inline add form */
+    .add-form {
+      background: white; border: 1px solid #E5E7EB;
+      border-radius: 8px; padding: 8px; margin-top: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .add-form input {
+      width: 100%; padding: 5px 7px; border: 1px solid #D1D5DB;
+      border-radius: 5px; font-size: 10.5px; font-family: inherit;
+      outline: none; margin-bottom: 5px;
+    }
+    .add-form input:focus { border-color: #6366F1; }
+    .add-form-row { display: flex; gap: 5px; align-items: center; }
+    .add-form select {
+      flex: 1; padding: 4px 6px; border: 1px solid #D1D5DB;
+      border-radius: 5px; font-size: 10px; font-family: inherit; outline: none;
+    }
+    .add-form-btns { display: flex; gap: 4px; }
+    .add-form-btns button {
+      padding: 4px 10px; border-radius: 5px; font-size: 10px;
+      font-weight: 600; cursor: pointer; border: none;
+    }
+    .btn-add-confirm { background: #111827; color: white; }
+    .btn-add-cancel  { background: #F3F4F6; color: #374151; }
+
+    /* Lane color left borders */
+    .lane-kr1 { border-left: 3px solid #1D4ED8; }
+    .lane-kr2 { border-left: 3px solid #16A34A; }
+    .lane-kr3 { border-left: 3px solid #EA580C; }
+    .lane-mx  { border-left: 3px solid #475569; }
+    .lane-ai  { border-left: 3px solid #7E22CE; }
+
+    /* ── Events bar ── */
+    .events-section { margin-top: 14px; }
+    .events-title {
+      font-size: 10.5px; font-weight: 700; color: #6B7280;
+      text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 7px;
+    }
+    .events-grid {
+      display: grid;
+      grid-template-columns: 152px repeat(6, 1fr);
+      background: white; border-radius: 11px;
+      overflow: hidden; box-shadow: var(--shadow); min-width: 1020px;
+    }
+    .events-label {
+      padding: 9px 11px; background: #FFF7ED;
+      border-right: 3px solid #EA580C;
+      display: flex; align-items: center;
+      font-size: 10.5px; font-weight: 700; color: #C2410C;
+    }
+    .events-cell {
+      padding: 7px 7px; border-left: 1px solid #F3F4F6;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .event-pill {
+      padding: 5px 8px; border-radius: 7px;
+      background: #FFF3E0; border: 1px solid #FDBA74;
+      font-size: 10px; font-weight: 500; color: #92400E; line-height: 1.35;
+    }
+    .event-pill.anchor {
+      background: linear-gradient(135deg, #FFF3E0, #FFEDD5);
+      border-color: #EA580C; font-weight: 700; color: #7C2D12;
+    }
+    .event-pill { cursor: grab; position: relative; transition: box-shadow 0.12s; }
+    .event-pill:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+    .event-pill.ev-dragging { opacity: 0.35; }
+    .event-date { font-size: 9px; color: #B45309; display: block; margin-top: 1px; }
+    .ev-text { outline: none; display: block; }
+    .ev-text[contenteditable="true"] { background: rgba(255,255,255,0.6); box-shadow: 0 0 0 2px rgba(99,102,241,0.4); border-radius: 3px; cursor: text; }
+    .ev-date-span { font-size: 9px; color: #B45309; display: block; margin-top: 1px; outline: none; }
+    .ev-date-span[contenteditable="true"] { background: rgba(255,255,255,0.5); box-shadow: 0 0 0 1px rgba(99,102,241,0.3); border-radius: 2px; cursor: text; }
+    .event-pill .ev-del {
+      position: absolute; top: 3px; right: 3px;
+      width: 14px; height: 14px; border-radius: 3px;
+      border: none; cursor: pointer; font-size: 9px;
+      background: rgba(239,68,68,0.15); color: #DC2626;
+      display: none; align-items: center; justify-content: center;
+    }
+    .event-pill:hover .ev-del { display: flex; }
+    .events-cell.ev-drag-over { background: #FFF7ED !important; outline: 2px dashed #FDBA74; outline-offset: -3px; }
+    .no-event { font-size: 10px; color: #D1D5DB; font-style: italic; }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 16px; display: flex; flex-wrap: wrap;
+      gap: 16px; align-items: center; padding: 0 2px;
+    }
+    .footer-item { display: flex; align-items: center; gap: 6px; font-size: 10.5px; color: #6B7280; }
+    .footer-swatch { width: 16px; height: 8px; border-radius: 3px; }
+
+    /* ── Context menu ── */
+    .ctx-menu {
+      position: fixed; z-index: 1000;
+      background: white; border: 1px solid #E5E7EB; border-radius: 9px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      padding: 5px; min-width: 160px;
+    }
+    .ctx-menu-title {
+      padding: 5px 10px; font-size: 9.5px; font-weight: 700;
+      color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .ctx-menu-item {
+      padding: 7px 10px; border-radius: 6px; font-size: 11px;
+      cursor: pointer; display: flex; align-items: center; gap: 8px;
+      color: #374151; transition: background 0.1s;
+    }
+    .ctx-menu-item:hover { background: #F3F4F6; }
+    .ctx-menu-item.active { background: #EEF2FF; color: #4F46E5; font-weight: 600; }
+    .ctx-menu-sep { height: 1px; background: #F0F0F0; margin: 4px 0; }
+    .ctx-menu-del { color: #DC2626; }
+    .ctx-menu-del:hover { background: #FEF2F2; }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+      z-index: 900; display: flex; align-items: center; justify-content: center;
+    }
+    .modal {
+      background: white; border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      padding: 24px; width: 380px; max-width: 92vw;
+    }
+    .modal h3 { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+    .modal label { font-size: 11.5px; font-weight: 600; color: #374151; display: block; margin-bottom: 5px; }
+    .modal input, .modal select, .modal textarea {
+      width: 100%; padding: 8px 10px; border: 1px solid #D1D5DB;
+      border-radius: 8px; font-size: 12px; font-family: inherit;
+      outline: none; margin-bottom: 12px;
+    }
+    .modal input:focus, .modal select:focus, .modal textarea:focus { border-color: #6366F1; }
+    .modal textarea { resize: vertical; min-height: 60px; }
+    .modal-btns { display: flex; gap: 8px; justify-content: flex-end; }
+    .modal-btns button {
+      padding: 8px 18px; border-radius: 8px; font-size: 12px;
+      font-weight: 600; cursor: pointer; border: none;
+    }
+    .modal-confirm { background: #111827; color: white; }
+    .modal-cancel  { background: #F3F4F6; color: #374151; }
+  </style>
 </head>
 <body>
-<h1>Welcome to the Interactive Q2 Roadmap</h1>
-<p>This is the interactive roadmap for Q2.</p>
+<div id="app"></div>
+<div id="ctx-menu" class="ctx-menu" style="display:none;"></div>
+<div id="modal" style="display:none;"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+//  DEFAULT STATE
+// ═══════════════════════════════════════════════════════════════════════
+const STORAGE_KEY = 'birdie-roadmap-q2-2026-v3';
+
+const LANE_TYPES = {
+  kr1: ['task','milestone','event'],
+  kr2: ['task','milestone','event'],
+  kr3: ['task','milestone','event'],
+  mx:  ['task','milestone','metric'],
+  ai:  ['task','milestone','ai'],
+};
+
+const TYPE_LABELS = { task:'Task', milestone:'Milestone', event:'Event', metric:'Metric', ai:'AI Skill' };
+
+const DEFAULT_STATE = {
+  sprints: [
+    { id:'s1', label:'Sprint 1', dates:'Apr 13–24',   status:'current'  },
+    { id:'s2', label:'Sprint 2', dates:'Apr 27–May 8', status:'upcoming' },
+    { id:'s3', label:'Sprint 3', dates:'May 11–22',    status:'upcoming' },
+    { id:'s4', label:'Sprint 4', dates:'May 25–Jun 5', status:'upcoming' },
+    { id:'s5', label:'Sprint 5', dates:'Jun 8–19',     status:'upcoming' },
+    { id:'s6', label:'Sprint 6', dates:'Jun 22–Jul 3', status:'upcoming' },
+  ],
+  lanes: [
+    { id:'kr1', label:'KR1', sublabel:'Findability',        color:'#1D4ED8', bg:'#EFF6FF', target:'Website Apr 30\nSEO/GEO via Claude\nComparison pages' },
+    { id:'kr2', label:'KR2', sublabel:'Credibility',         color:'#16A34A', bg:'#F0FDF4', target:'3 case studies live\n15+ G2/Capterra reviews by Jun 30'  },
+    { id:'kr3', label:'KR3', sublabel:'DemandGen',           color:'#EA580C', bg:'#FFF7ED', target:'120 qualified MQLs\n≥30% from target accounts'          },
+    { id:'mx',  label:'📊',  sublabel:'Metrics & Reporting', color:'#475569', bg:'#F8FAFC', target:'Weekly KPI pulse\nBi-weekly KR review (every sprint end)'},
+    { id:'ai',  label:'🤖',  sublabel:'Claude Skills',       color:'#7E22CE', bg:'#FAF5FF', target:'3 skills/sprint\n1 per team member' },
+  ],
+  events: {
+    s1: [{ text:'🍽️ Dinner San Diego', date:'Apr 22', anchor:false }],
+    s2: [{ text:'🍽️ Dinner SF / Bay Area', date:'Apr 29', anchor:false }, { text:'🍽️ Dinner Nashville', date:'May 7', anchor:false }],
+    s3: [{ text:'⭐ Zendesk Relate — Happy Hour Denver', date:'May 19 — Birdie Sponsor', anchor:true }],
+    s4: [{ text:'🍽️ Dinner Toronto', date:'May 27', anchor:false }],
+    s5: [],
+    s6: [],
+  },
+  cards: {
+    'kr1-s1': [
+      { id:'k1s1a', text:'Website copy & narrative audit', type:'task', detail:'' },
+      { id:'k1s1b', text:'🏗️ Build vs Buy page — draft', type:'milestone', detail:'' },
+      { id:'k1s1c', text:'Enterpret page → reusable template', type:'task', detail:'' },
+      { id:'k1s1d', text:'SEO/GEO keyword baseline (Claude skill)', type:'task', detail:'' },
+    ],
+    'kr1-s2': [
+      { id:'k1s2a', text:'🚀 Website Launch — Apr 30', type:'milestone', detail:'"Beyond Customer Intelligence" + VoC+QA above fold' },
+      { id:'k1s2b', text:'Unwrap comparison page — live', type:'task', detail:'' },
+      { id:'k1s2c', text:'SEO meta tags + schema optimization', type:'task', detail:'' },
+    ],
+    'kr1-s3': [
+      { id:'k1s3a', text:'Chattermill comparison page — live', type:'task', detail:'' },
+      { id:'k1s3b', text:'GEO: optimize for AI-generated answers', type:'task', detail:'' },
+      { id:'k1s3c', text:'Internal linking across comparison pages', type:'task', detail:'' },
+    ],
+    'kr1-s4': [
+      { id:'k1s4a', text:'UnitQ comparison page — live', type:'task', detail:'' },
+      { id:'k1s4b', text:'1st keyword ranking review', type:'task', detail:'' },
+      { id:'k1s4c', text:'Build vs Buy page — optimized final', type:'task', detail:'' },
+    ],
+    'kr1-s5': [
+      { id:'k1s5a', text:'All 5 comparison pages: SEO pass', type:'task', detail:'' },
+      { id:'k1s5b', text:'GEO audit: Birdie in AI answers check', type:'task', detail:'' },
+      { id:'k1s5c', text:'Target account visit tracking review', type:'task', detail:'' },
+    ],
+    'kr1-s6': [
+      { id:'k1s6a', text:'📊 Q2 SEO/GEO audit', type:'milestone', detail:'Ranking gains + AI answer presence → Q3 plan' },
+      { id:'k1s6b', text:'Hand-off comparison page template to CS', type:'task', detail:'' },
+    ],
+    'kr2-s1': [
+      { id:'k2s1a', text:'Select 3 CS customers + interview scheduling', type:'task', detail:'' },
+      { id:'k2s1b', text:'G2/Capterra activation email to customers', type:'task', detail:'' },
+      { id:'k2s1c', text:'LinkedIn cadence kick-off (2–3×/wk)', type:'task', detail:'' },
+    ],
+    'kr2-s2': [
+      { id:'k2s2a', text:'CS #1: interview + draft', type:'task', detail:'' },
+      { id:'k2s2b', text:'LinkedIn: Founder POV + outcome stories live', type:'task', detail:'' },
+      { id:'k2s2c', text:'G2 checkpoint: 3–5 reviews', type:'event', detail:'' },
+    ],
+    'kr2-s3': [
+      { id:'k2s3a', text:'✅ CS #1 live on website + sent to Sales', type:'milestone', detail:'' },
+      { id:'k2s3b', text:'CS #2: interview + draft', type:'task', detail:'' },
+      { id:'k2s3c', text:'G2 checkpoint: 7–8 reviews', type:'event', detail:'' },
+    ],
+    'kr2-s4': [
+      { id:'k2s4a', text:'✅ CS #2 live on website', type:'milestone', detail:'' },
+      { id:'k2s4b', text:'CS #3: interview + draft', type:'task', detail:'' },
+      { id:'k2s4c', text:'G2 checkpoint: 11–12 reviews', type:'event', detail:'' },
+    ],
+    'kr2-s5': [
+      { id:'k2s5a', text:'CS #3: design + final review', type:'task', detail:'' },
+      { id:'k2s5b', text:'G2 checkpoint: 13–14 reviews', type:'event', detail:'' },
+      { id:'k2s5c', text:'Accuracy Gap Report: draft outline', type:'task', detail:'' },
+    ],
+    'kr2-s6': [
+      { id:'k2s6a', text:'✅ CS #3 live — all 3 delivered', type:'milestone', detail:'Full Sales kit distributed' },
+      { id:'k2s6b', text:'🎯 15+ G2/Capterra reviews hit', type:'milestone', detail:'' },
+    ],
+    'kr3-s1': [
+      { id:'k3s1a', text:'Google Search Ads: setup + go live', type:'task', detail:'' },
+      { id:'k3s1b', text:'Top 200 ABM account list finalised', type:'task', detail:'' },
+      { id:'k3s1c', text:'LinkedIn Lead Gen Ads configured', type:'task', detail:'' },
+      { id:'k3s1d', text:'Webinar 1: topic confirmed + speaker locked', type:'task', detail:'' },
+    ],
+    'kr3-s2': [
+      { id:'k3s2a', text:'Webinar 1 registration page live (gated)', type:'task', detail:'' },
+      { id:'k3s2b', text:'Accuracy Gap Report: writing begins', type:'task', detail:'' },
+      { id:'k3s2c', text:'Google Ads: 1st cost-per-lead review', type:'task', detail:'' },
+    ],
+    'kr3-s3': [
+      { id:'k3s3a', text:'🎯 Webinar 1 — May', type:'milestone', detail:'Customer CX story · 20-min + Q&A → case study + clips' },
+      { id:'k3s3b', text:'Accuracy Gap Report: gated launch', type:'task', detail:'' },
+      { id:'k3s3c', text:'Post-Zendesk Relate: ABM follow-up sequences', type:'task', detail:'' },
+    ],
+    'kr3-s4': [
+      { id:'k3s4a', text:'Webinar 1 gated recording → MQL capture', type:'task', detail:'' },
+      { id:'k3s4b', text:'Webinar 2: topic confirmed + speaker locked', type:'task', detail:'' },
+      { id:'k3s4c', text:'MQL pace check: ≥50% of 120 target', type:'event', detail:'' },
+      { id:'k3s4d', text:'Ads: double down on winning channels', type:'task', detail:'' },
+    ],
+    'kr3-s5': [
+      { id:'k3s5a', text:'Webinar 2 registration page live (gated)', type:'task', detail:'' },
+      { id:'k3s5b', text:'ABM sequences: 3rd+ touch for top accounts', type:'task', detail:'' },
+      { id:'k3s5c', text:'LinkedIn Ads: retargeting layer activated', type:'task', detail:'' },
+    ],
+    'kr3-s6': [
+      { id:'k3s6a', text:'🎯 Webinar 2 — June', type:'milestone', detail:'2nd customer story · gated recording' },
+      { id:'k3s6b', text:'📊 Q2 Lead Harvest', type:'milestone', detail:'120 MQL target · Sales handoff + pipeline review' },
+    ],
+    'mx-s1': [
+      { id:'ms1a', text:'📍 Baseline capture', type:'milestone', detail:'Traffic · G2 count · LinkedIn followers · MQL baseline · Ads benchmark' },
+      { id:'ms1b', text:'🔁 Weekly KPI pulse — set up template', type:'metric', detail:'' },
+      { id:'ms1c', text:'📋 Sprint KR review template created', type:'metric', detail:'' },
+    ],
+    'mx-s2': [
+      { id:'ms2a', text:'🔁 Weekly KPI pulse (ongoing)', type:'metric', detail:'' },
+      { id:'ms2b', text:'📋 Sprint 1→2 KR review', type:'milestone', detail:'' },
+      { id:'ms2c', text:'Google Ads: cost-per-lead baseline set', type:'task', detail:'' },
+    ],
+    'mx-s3': [
+      { id:'ms3a', text:'🔁 Weekly KPI pulse (ongoing)', type:'metric', detail:'' },
+      { id:'ms3b', text:'📋 Sprint 2→3 KR review', type:'milestone', detail:'' },
+      { id:'ms3c', text:'Webinar 1 MQL attribution report', type:'task', detail:'' },
+    ],
+    'mx-s4': [
+      { id:'ms4a', text:'🔁 Weekly KPI pulse (ongoing)', type:'metric', detail:'' },
+      { id:'ms4b', text:'📋 Sprint 3→4 KR review', type:'milestone', detail:'' },
+      { id:'ms4c', text:'Mid-quarter exec report: KR pace vs target', type:'task', detail:'' },
+    ],
+    'mx-s5': [
+      { id:'ms5a', text:'🔁 Weekly KPI pulse (ongoing)', type:'metric', detail:'' },
+      { id:'ms5b', text:'📋 Sprint 4→5 KR review', type:'milestone', detail:'' },
+      { id:'ms5c', text:'SEO/GEO: first ranking movement report', type:'task', detail:'' },
+    ],
+    'mx-s6': [
+      { id:'ms6a', text:'🔁 Final weekly KPI pulse', type:'metric', detail:'' },
+      { id:'ms6b', text:'📋 Q2 KR final review — all 3 KRs', type:'milestone', detail:'Exec presentation · Q3 hand-off plan' },
+    ],
+    'ai-s1': [
+      { id:'as1a', text:'🏦 Build Skills Bank', type:'milestone', detail:'All ideas catalogued: SEO optimizer · CS draft builder · MQL screener · LinkedIn formatter · KPI reporter · Email automator · Comparison page gen · Brief generator · Review requester · Ad copy tester' },
+      { id:'as1b', text:'Sprint 1 first picks — 3 chosen by team', type:'ai', detail:'' },
+    ],
+    'ai-s2': [
+      { id:'as2a', text:'Team member 1 — skill TBD from bank', type:'ai', detail:'' },
+      { id:'as2b', text:'Team member 2 — skill TBD from bank', type:'ai', detail:'' },
+      { id:'as2c', text:'Team member 3 — skill TBD from bank', type:'ai', detail:'' },
+    ],
+    'ai-s3': [
+      { id:'as3a', text:'Team member 1 — skill TBD from bank', type:'ai', detail:'' },
+      { id:'as3b', text:'Team member 2 — skill TBD from bank', type:'ai', detail:'' },
+      { id:'as3c', text:'Team member 3 — skill TBD from bank', type:'ai', detail:'' },
+    ],
+    'ai-s4': [
+      { id:'as4a', text:'Team member 1 — skill TBD from bank', type:'ai', detail:'' },
+      { id:'as4b', text:'Team member 2 — skill TBD from bank', type:'ai', detail:'' },
+      { id:'as4c', text:'Team member 3 — skill TBD from bank', type:'ai', detail:'' },
+    ],
+    'ai-s5': [
+      { id:'as5a', text:'Team member 1 — skill TBD from bank', type:'ai', detail:'' },
+      { id:'as5b', text:'Team member 2 — skill TBD from bank', type:'ai', detail:'' },
+      { id:'as5c', text:'Team member 3 — skill TBD from bank', type:'ai', detail:'' },
+    ],
+    'ai-s6': [
+      { id:'as6a', text:'Team member 1 — skill TBD from bank', type:'ai', detail:'' },
+      { id:'as6b', text:'Team member 2 — skill TBD from bank', type:'ai', detail:'' },
+      { id:'as6c', text:'📚 Skills retrospective', type:'milestone', detail:'Which skills saved the most time? → Q3 bank' },
+    ],
+  }
+};
+
+// ═══════════════════════════════════════════════════════════════════════
+//  STATE MANAGEMENT
+// ═══════════════════════════════════════════════════════════════════════
+let state;
+let dragCardId   = null;
+let dragFromCell = null;
+let activeAddCell  = null;
+let activeAddEvent = null;
+let dragEvSprintId = null;
+let dragEvIdx      = null;
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // Always apply latest lane labels without touching cards or events
+      parsed.lanes = clone(DEFAULT_STATE.lanes);
+      return parsed;
+    }
+  } catch(e) {}
+  return clone(DEFAULT_STATE);
+}
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  // Flash "Saved" indicator
+  const el = document.getElementById('saved-ind');
+  if (el) { el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 1500); }
+}
+
+function clone(obj) { return JSON.parse(JSON.stringify(obj)); }
+
+function uid() { return 'c' + Date.now() + Math.random().toString(36).slice(2,7); }
+
+// ═══════════════════════════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════════════════════════
+function render() {
+  document.getElementById('app').innerHTML = buildApp();
+}
+
+function buildApp() {
+  return `
+    ${buildToolbar()}
+    ${buildLegend()}
+    <div class="scroll-wrap">${buildGrid()}</div>
+    <div class="events-section"><div class="scroll-wrap">${buildEvents()}</div></div>
+    ${buildFooter()}
+  `;
+}
+
+function buildToolbar() {
+  return `
+    <div class="toolbar">
+      <div class="toolbar-title">
+        <div class="logo">🐦</div>
+        <div class="title-text">
+          <h1>Birdie Marketing — Q2 2026 Roadmap</h1>
+          <p>6 bi-weekly sprints (Mon–Fri) · Apr 13 – Jul 3, 2026 · Lean team · US Market</p>
+        </div>
+      </div>
+      <div class="toolbar-actions">
+        <span class="saved-indicator" id="saved-ind">✓ Saved</span>
+        <button class="btn btn-outline" onclick="exportJSON()">⬇ Export JSON</button>
+        <button class="btn btn-outline" onclick="importJSON()">⬆ Import JSON</button>
+        <button class="btn btn-danger"  onclick="resetDefaults()">↺ Reset</button>
+      </div>
+    </div>`;
+}
+
+function buildLegend() {
+  return `
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#1D4ED8"></div><span class="legend-label">KR1 Findability</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#16A34A"></div><span class="legend-label">KR2 Credibility</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#EA580C"></div><span class="legend-label">KR3 DemandGen</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#475569"></div><span class="legend-label">📊 Metrics</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#7E22CE"></div><span class="legend-label">🤖 Claude Skills</span></div>
+      <div class="legend-sep"></div>
+      <span class="legend-hint">✏️ Click text to edit &nbsp;·&nbsp; ⬡ Right-click card for options &nbsp;·&nbsp; ↕ Drag to move &nbsp;·&nbsp; ＋ Add card</span>
+    </div>`;
+}
+
+function buildGrid() {
+  const { sprints, lanes } = state;
+  const colCount = 1 + sprints.length;
+  let html = `<div class="grid-wrap"><div class="grid">`;
+
+  // ── Sprint header ──
+  html += `<div class="sprint-corner">Track / Sprint</div>`;
+  sprints.forEach(sp => {
+    html += `
+      <div class="sprint-header ${sp.status}">
+        ${sp.status === 'current' ? '<div class="sprint-bar current"></div>' : ''}
+        <div class="sprint-num ${sp.status}">${sp.label}</div>
+        <div class="sprint-dates">${sp.dates}</div>
+        ${sp.status === 'current' ? '<span class="sprint-tag current">▶ Now</span>' : ''}
+      </div>`;
+  });
+
+  // ── Lane rows ──
+  lanes.forEach((lane, laneIdx) => {
+    const isLast = laneIdx === lanes.length - 1;
+
+    // Label cell
+    html += `
+      <div class="lane-label lane-${lane.id}" style="background:${lane.bg}; ${isLast ? 'border-bottom:none;' : ''}">
+        <span class="lane-badge" style="background:${lane.bg}; color:${lane.color};">${lane.label}</span>
+        <span class="lane-name" style="color:${lane.color};">${lane.sublabel}</span>
+        <ul class="lane-target">${lane.target.split('\n').map(t => `<li>${t}</li>`).join('')}</ul>
+      </div>`;
+
+    // Sprint cells
+    sprints.forEach(sp => {
+      const cellKey = `${lane.id}-${sp.id}`;
+      const cards   = state.cards[cellKey] || [];
+      const isAddOpen = activeAddCell === cellKey;
+
+      html += `
+        <div class="lane-cell ${isLast ? 'last-row' : ''}"
+             data-cell="${cellKey}"
+             ondragover="onDragOver(event)"
+             ondragleave="onDragLeave(event)"
+             ondrop="onDrop(event,'${cellKey}')">
+          ${cards.map(card => buildCard(card, cellKey, lane.id)).join('')}
+          ${isAddOpen ? buildAddForm(cellKey, lane.id) : `<button class="add-card-btn" onclick="openAddForm('${cellKey}')">＋ Add card</button>`}
+        </div>`;
+    });
+  });
+
+  html += `</div></div>`;
+  return html;
+}
+
+function buildCard(card, cellKey, laneId) {
+  const esc = s => s.replace(/"/g, '&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return `
+    <div class="card"
+         id="card-${card.id}"
+         data-lane="${laneId}"
+         data-type="${card.type}"
+         data-card="${card.id}"
+         data-cell="${cellKey}"
+         draggable="true"
+         ondragstart="onDragStart(event,'${card.id}','${cellKey}')"
+         ondragend="onDragEnd(event)"
+         oncontextmenu="showCtxMenu(event,'${card.id}','${cellKey}','${laneId}')">
+      <span class="card-text"
+            id="ct-${card.id}"
+            onclick="startEdit('${card.id}','${cellKey}','text')"
+            title="Click to edit">${esc(card.text)}</span>
+      ${card.detail ? `<span class="card-detail" id="cd-${card.id}" onclick="startEdit('${card.id}','${cellKey}','detail')" title="Click to edit detail">${esc(card.detail)}</span>` : ''}
+    </div>`;
+}
+
+function buildAddForm(cellKey, laneId) {
+  const types = LANE_TYPES[laneId] || ['task','milestone'];
+  const opts = types.map(t => `<option value="${t}">${TYPE_LABELS[t]}</option>`).join('');
+  return `
+    <div class="add-form" id="add-form-${cellKey}">
+      <input type="text" id="add-text-${cellKey}" placeholder="Card text…" onkeydown="addFormKey(event,'${cellKey}')">
+      <div class="add-form-row">
+        <select id="add-type-${cellKey}">${opts}</select>
+        <div class="add-form-btns">
+          <button class="btn-add-confirm" onclick="confirmAdd('${cellKey}')">Add</button>
+          <button class="btn-add-cancel"  onclick="closeAddForm()">Cancel</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildEvents() {
+  const { sprints } = state;
+  let html = `<div class="events-grid">`;
+  html += `<div class="events-label">📅 Events &amp;<br>Field</div>`;
+  sprints.forEach(sp => {
+    const events = state.events[sp.id] || [];
+    const isAddOpen = activeAddEvent === sp.id;
+    html += `<div class="events-cell"
+      data-sprint="${sp.id}"
+      ondragover="onEvDragOver(event)"
+      ondragleave="onEvDragLeave(event)"
+      ondrop="onEvDrop(event,'${sp.id}')">`;
+
+    events.forEach((ev, idx) => {
+      const esc = s => (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      html += `
+        <div class="event-pill ${ev.anchor ? 'anchor' : ''}"
+             draggable="true"
+             ondragstart="onEvDragStart(event,'${sp.id}',${idx})"
+             ondragend="onEvDragEnd(event)"
+             oncontextmenu="showEvCtxMenu(event,'${sp.id}',${idx})">
+          <button class="ev-del" onclick="deleteEvent('${sp.id}',${idx})">×</button>
+          <span class="ev-text" id="evt-${sp.id}-${idx}"
+                onclick="startEvEdit('${sp.id}',${idx},'text')"
+                title="Click to edit">${esc(ev.text)}</span>
+          <span class="ev-date-span" id="evd-${sp.id}-${idx}"
+                onclick="startEvEdit('${sp.id}',${idx},'date')"
+                title="Click to edit date">${esc(ev.date)}</span>
+        </div>`;
+    });
+
+    if (isAddOpen) {
+      html += `
+        <div class="add-form" style="margin-top:4px;">
+          <input type="text" id="ev-add-text-${sp.id}" placeholder="Event name…" onkeydown="evAddKey(event,'${sp.id}')">
+          <input type="text" id="ev-add-date-${sp.id}" placeholder="Date (e.g. May 19)" onkeydown="evAddKey(event,'${sp.id}')">
+          <div class="add-form-btns" style="margin-top:4px;">
+            <button class="btn-add-confirm" onclick="confirmAddEvent('${sp.id}')">Add</button>
+            <button class="btn-add-cancel"  onclick="closeAddEvent()">Cancel</button>
+          </div>
+        </div>`;
+    } else {
+      html += `<button class="add-card-btn" onclick="openAddEvent('${sp.id}')">＋ Add event</button>`;
+    }
+
+    html += `</div>`;
+  });
+  html += `</div>`;
+  return html;
+}
+
+function buildFooter() {
+  return `
+    <div class="footer">
+      <div class="footer-item"><div class="footer-swatch" style="background:#1D4ED8"></div>KR1 — Website Apr 30, 5 comparison pages, SEO/GEO via Claude skills</div>
+      <div class="footer-item"><div class="footer-swatch" style="background:#16A34A"></div>KR2 — 3 case studies + 15 G2 reviews by Jun 30</div>
+      <div class="footer-item"><div class="footer-swatch" style="background:#EA580C"></div>KR3 — 120 MQLs · ≥30% target accounts · 2 webinars + Zendesk Relate</div>
+      <div class="footer-item" style="margin-left:auto; color:#D1D5DB; font-size:10px;">Birdie · Q2 2026 · CONFIDENTIAL</div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  DRAG & DROP
+// ═══════════════════════════════════════════════════════════════════════
+function onDragStart(e, cardId, fromCell) {
+  dragCardId   = cardId;
+  dragFromCell = fromCell;
+  e.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => {
+    const el = document.getElementById('card-' + cardId);
+    if (el) el.classList.add('dragging');
+  }, 0);
+}
+
+function onDragEnd(e) {
+  if (dragCardId) {
+    const el = document.getElementById('card-' + dragCardId);
+    if (el) el.classList.remove('dragging');
+  }
+  document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+  dragCardId   = null;
+  dragFromCell = null;
+}
+
+function onDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  e.currentTarget.classList.add('drag-over');
+}
+
+function onDragLeave(e) {
+  if (!e.currentTarget.contains(e.relatedTarget)) {
+    e.currentTarget.classList.remove('drag-over');
+  }
+}
+
+function onDrop(e, toCell) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (!dragCardId || dragFromCell === toCell) return;
+
+  const fromCards = state.cards[dragFromCell] || [];
+  const idx = fromCards.findIndex(c => c.id === dragCardId);
+  if (idx === -1) return;
+
+  const [card] = fromCards.splice(idx, 1);
+  if (!state.cards[toCell]) state.cards[toCell] = [];
+  state.cards[toCell].push(card);
+
+  dragCardId   = null;
+  dragFromCell = null;
+  save();
+  render();
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  INLINE EDITING
+// ═══════════════════════════════════════════════════════════════════════
+function startEdit(cardId, cellKey, field) {
+  const elId  = field === 'text' ? `ct-${cardId}` : `cd-${cardId}`;
+  const el    = document.getElementById(elId);
+  if (!el) return;
+
+  el.contentEditable = 'true';
+  el.focus();
+
+  // Select all
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+
+  function finish() {
+    const val = el.innerText.trim();
+    const cards = state.cards[cellKey] || [];
+    const card  = cards.find(c => c.id === cardId);
+    if (card && val) {
+      if (field === 'text') card.text = val;
+      else card.detail = val;
+      save();
+    }
+    el.contentEditable = 'false';
+    el.removeEventListener('blur', finish);
+    el.removeEventListener('keydown', onKey);
+  }
+
+  function onKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); el.blur(); }
+    if (e.key === 'Escape') { el.contentEditable = 'false'; el.removeEventListener('blur', finish); el.removeEventListener('keydown', onKey); render(); }
+  }
+
+  el.addEventListener('blur',    finish);
+  el.addEventListener('keydown', onKey);
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  ADD CARD
+// ═══════════════════════════════════════════════════════════════════════
+function openAddForm(cellKey) {
+  activeAddCell = cellKey;
+  render();
+  const inp = document.getElementById(`add-text-${cellKey}`);
+  if (inp) inp.focus();
+}
+
+function closeAddForm() {
+  activeAddCell = null;
+  render();
+}
+
+function addFormKey(e, cellKey) {
+  if (e.key === 'Enter') confirmAdd(cellKey);
+  if (e.key === 'Escape') closeAddForm();
+}
+
+function confirmAdd(cellKey) {
+  const textEl = document.getElementById(`add-text-${cellKey}`);
+  const typeEl = document.getElementById(`add-type-${cellKey}`);
+  const text   = textEl ? textEl.value.trim() : '';
+  if (!text) return;
+
+  const card = { id: uid(), text, type: typeEl ? typeEl.value : 'task', detail: '' };
+  if (!state.cards[cellKey]) state.cards[cellKey] = [];
+  state.cards[cellKey].push(card);
+
+  activeAddCell = null;
+  save();
+  render();
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  CONTEXT MENU
+// ═══════════════════════════════════════════════════════════════════════
+function showCtxMenu(e, cardId, cellKey, laneId) {
+  e.preventDefault();
+  const menu  = document.getElementById('ctx-menu');
+  const cards = state.cards[cellKey] || [];
+  const card  = cards.find(c => c.id === cardId);
+  if (!card) return;
+
+  const types = LANE_TYPES[laneId] || ['task','milestone'];
+  const typeItems = types.map(t => `
+    <div class="ctx-menu-item ${card.type === t ? 'active' : ''}" onclick="changeType('${cardId}','${cellKey}','${t}');hideCtxMenu()">
+      ${card.type === t ? '✓' : '·'} ${TYPE_LABELS[t]}
+    </div>`).join('');
+
+  menu.innerHTML = `
+    <div class="ctx-menu-title">Card type</div>
+    ${typeItems}
+    <div class="ctx-menu-sep"></div>
+    <div class="ctx-menu-item" onclick="addDetailPrompt('${cardId}','${cellKey}');hideCtxMenu()">✏️ Edit detail text</div>
+    <div class="ctx-menu-sep"></div>
+    <div class="ctx-menu-item ctx-menu-del" onclick="deleteCard('${cardId}','${cellKey}');hideCtxMenu()">🗑 Delete card</div>
+  `;
+
+  menu.style.display = 'block';
+  menu.style.left = Math.min(e.pageX, window.innerWidth - 180) + 'px';
+  menu.style.top  = Math.min(e.pageY, window.innerHeight - menu.offsetHeight - 10) + 'px';
+
+  setTimeout(() => document.addEventListener('click', hideCtxMenu, { once: true }), 10);
+}
+
+function hideCtxMenu() {
+  document.getElementById('ctx-menu').style.display = 'none';
+}
+
+function changeType(cardId, cellKey, newType) {
+  const card = (state.cards[cellKey] || []).find(c => c.id === cardId);
+  if (card) { card.type = newType; save(); render(); }
+}
+
+function addDetailPrompt(cardId, cellKey) {
+  const card = (state.cards[cellKey] || []).find(c => c.id === cardId);
+  if (!card) return;
+  showModal('Edit detail', card.detail, (val) => {
+    card.detail = val;
+    save(); render();
+  });
+}
+
+function deleteCard(cardId, cellKey) {
+  if (!confirm('Delete this card?')) return;
+  state.cards[cellKey] = (state.cards[cellKey] || []).filter(c => c.id !== cardId);
+  save(); render();
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MODAL (for detail editing)
+// ═══════════════════════════════════════════════════════════════════════
+function showModal(title, currentVal, onConfirm) {
+  const modal = document.getElementById('modal');
+  modal.innerHTML = `
+    <div class="modal-overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal">
+        <h3>${title}</h3>
+        <textarea id="modal-input" rows="4">${currentVal || ''}</textarea>
+        <div class="modal-btns">
+          <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+          <button class="modal-confirm" onclick="confirmModal()">Save</button>
+        </div>
+      </div>
+    </div>`;
+  modal.style.display = 'block';
+  modal._onConfirm = onConfirm;
+  document.getElementById('modal-input').focus();
+}
+
+function confirmModal() {
+  const val = document.getElementById('modal-input').value.trim();
+  if (document.getElementById('modal')._onConfirm) {
+    document.getElementById('modal')._onConfirm(val);
+  }
+  closeModal();
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  EXPORT / IMPORT / RESET
+// ═══════════════════════════════════════════════════════════════════════
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'birdie-roadmap-q2-2026.json';
+  a.click();
+}
+
+function importJSON() {
+  const inp = document.createElement('input');
+  inp.type   = 'file';
+  inp.accept = '.json';
+  inp.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        state = JSON.parse(ev.target.result);
+        save(); render();
+      } catch(err) { alert('Invalid JSON file.'); }
+    };
+    reader.readAsText(file);
+  };
+  inp.click();
+}
+
+function resetDefaults() {
+  if (!confirm('Reset all changes and restore the default roadmap?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  state = clone(DEFAULT_STATE);
+  save(); render();
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  EVENTS — DRAG & DROP
+// ═══════════════════════════════════════════════════════════════════════
+function onEvDragStart(e, sprintId, idx) {
+  dragEvSprintId = sprintId;
+  dragEvIdx      = idx;
+  e.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => {
+    const pills = document.querySelectorAll(`.events-cell[data-sprint="${sprintId}"] .event-pill`);
+    if (pills[idx]) pills[idx].classList.add('ev-dragging');
+  }, 0);
+}
+
+function onEvDragEnd(e) {
+  document.querySelectorAll('.event-pill.ev-dragging').forEach(el => el.classList.remove('ev-dragging'));
+  document.querySelectorAll('.ev-drag-over').forEach(el => el.classList.remove('ev-drag-over'));
+  dragEvSprintId = null;
+  dragEvIdx      = null;
+}
+
+function onEvDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  e.currentTarget.classList.add('ev-drag-over');
+}
+
+function onEvDragLeave(e) {
+  if (!e.currentTarget.contains(e.relatedTarget)) {
+    e.currentTarget.classList.remove('ev-drag-over');
+  }
+}
+
+function onEvDrop(e, toSprintId) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('ev-drag-over');
+  if (dragEvSprintId === null || (dragEvSprintId === toSprintId)) return;
+
+  const fromList = state.events[dragEvSprintId] || [];
+  const [ev] = fromList.splice(dragEvIdx, 1);
+  if (!state.events[toSprintId]) state.events[toSprintId] = [];
+  state.events[toSprintId].push(ev);
+
+  dragEvSprintId = null;
+  dragEvIdx      = null;
+  save(); render();
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  EVENTS — INLINE EDIT
+// ═══════════════════════════════════════════════════════════════════════
+function startEvEdit(sprintId, idx, field) {
+  const elId = field === 'text' ? `evt-${sprintId}-${idx}` : `evd-${sprintId}-${idx}`;
+  const el   = document.getElementById(elId);
+  if (!el) return;
+
+  el.contentEditable = 'true';
+  el.focus();
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+
+  function finish() {
+    const val = el.innerText.trim();
+    const ev  = (state.events[sprintId] || [])[idx];
+    if (ev && val) {
+      if (field === 'text') ev.text = val;
+      else ev.date = val;
+      save();
+    }
+    el.contentEditable = 'false';
+    el.removeEventListener('blur', finish);
+    el.removeEventListener('keydown', onKey);
+  }
+  function onKey(e) {
+    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+    if (e.key === 'Escape') { el.contentEditable = 'false'; el.removeEventListener('blur', finish); render(); }
+  }
+  el.addEventListener('blur', finish);
+  el.addEventListener('keydown', onKey);
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  EVENTS — ADD / DELETE / CTX MENU
+// ═══════════════════════════════════════════════════════════════════════
+function openAddEvent(sprintId) {
+  activeAddEvent = sprintId;
+  render();
+  const el = document.getElementById(`ev-add-text-${sprintId}`);
+  if (el) el.focus();
+}
+
+function closeAddEvent() {
+  activeAddEvent = null;
+  render();
+}
+
+function evAddKey(e, sprintId) {
+  if (e.key === 'Enter') confirmAddEvent(sprintId);
+  if (e.key === 'Escape') closeAddEvent();
+}
+
+function confirmAddEvent(sprintId) {
+  const textEl = document.getElementById(`ev-add-text-${sprintId}`);
+  const dateEl = document.getElementById(`ev-add-date-${sprintId}`);
+  const text   = textEl ? textEl.value.trim() : '';
+  if (!text) return;
+  if (!state.events[sprintId]) state.events[sprintId] = [];
+  state.events[sprintId].push({ text, date: dateEl ? dateEl.value.trim() : '', anchor: false });
+  activeAddEvent = null;
+  save(); render();
+}
+
+function deleteEvent(sprintId, idx) {
+  if (!confirm('Delete this event?')) return;
+  (state.events[sprintId] || []).splice(idx, 1);
+  save(); render();
+}
+
+function showEvCtxMenu(e, sprintId, idx) {
+  e.preventDefault();
+  const ev   = (state.events[sprintId] || [])[idx];
+  if (!ev) return;
+  const menu = document.getElementById('ctx-menu');
+  menu.innerHTML = `
+    <div class="ctx-menu-title">Event</div>
+    <div class="ctx-menu-item ${ev.anchor ? 'active' : ''}" onclick="toggleEvAnchor('${sprintId}',${idx});hideCtxMenu()">
+      ${ev.anchor ? '✓' : '·'} Anchor / featured
+    </div>
+    <div class="ctx-menu-sep"></div>
+    <div class="ctx-menu-item ctx-menu-del" onclick="deleteEvent('${sprintId}',${idx});hideCtxMenu()">🗑 Delete event</div>
+  `;
+  menu.style.display = 'block';
+  menu.style.left = Math.min(e.pageX, window.innerWidth - 180) + 'px';
+  menu.style.top  = Math.min(e.pageY, window.innerHeight - 120) + 'px';
+  setTimeout(() => document.addEventListener('click', hideCtxMenu, { once: true }), 10);
+}
+
+function toggleEvAnchor(sprintId, idx) {
+  const ev = (state.events[sprintId] || [])[idx];
+  if (ev) { ev.anchor = !ev.anchor; save(); render(); }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  state = loadState();
+  render();
+});
+</script>
 </body>
 </html>
