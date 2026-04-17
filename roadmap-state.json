@@ -63,6 +63,14 @@
       "target": "120 qualified MQLs\n≥30% from target accounts"
     },
     {
+      "id": "pm",
+      "label": "PM",
+      "sublabel": "Product Marketing",
+      "color": "#0E7490",
+      "bg": "#ECFEFF",
+      "target": "Product launches\nEnablement content\nGTM coordination"
+    },
+    {
       "id": "mx",
       "label": "📊",
       "sublabel": "Metrics & Reporting",
@@ -137,7 +145,7 @@
       },
       {
         "id": "k1s1b",
-        "text": "🏗️ Build vs Buy page — Live (Blog)",
+        "text": "🏗️ Build vs Buy article — Live (Blog)",
         "type": "milestone",
         "detail": ""
       },
@@ -715,6 +723,25 @@
         "type": "milestone",
         "detail": "Which skills saved the most time? → Q3 bank"
       }
-    ]
+    ],
+    "pm-s1": [
+      {
+        "id": "pms1a",
+        "text": "🚀 MCP Connector Launch — Video & Page",
+        "type": "milestone",
+        "detail": ""
+      },
+      {
+        "id": "c1776463441587s666b",
+        "text": "MCP Connector — PT",
+        "type": "task",
+        "detail": ""
+      }
+    ],
+    "pm-s2": [],
+    "pm-s3": [],
+    "pm-s4": [],
+    "pm-s5": [],
+    "pm-s6": []
   }
 }
