@@ -200,6 +200,9 @@
     .card[data-lane="ai"][data-type="task"]       { background: #FAF5FF; color: #581C87; }
     .card[data-lane="ai"][data-type="milestone"]  { background: #7E22CE; color: white; font-weight: 700; }
     .card[data-lane="ai"][data-type="ai"]         { background: #F3E8FF; color: #6B21A8; border: 1px dashed #C084FC; }
+    .card[data-lane="pm"][data-type="task"]       { background: #ECFDF5; color: #065F46; }
+    .card[data-lane="pm"][data-type="milestone"]  { background: #0E7490; color: white; font-weight: 700; }
+    .card[data-lane="pm"][data-type="event"]      { background: #CFFAFE; color: #164E63; border: 1px solid #67E8F9; }
 
     /* Add card button */
     .add-card-btn {
@@ -242,6 +245,7 @@
     .lane-kr3 { border-left: 3px solid #EA580C; }
     .lane-mx  { border-left: 3px solid #475569; }
     .lane-ai  { border-left: 3px solid #7E22CE; }
+    .lane-pm  { border-left: 3px solid #0E7490; }
 
     /* ── Events bar ── */
     .events-section { margin-top: 14px; }
@@ -368,6 +372,7 @@ const LANE_TYPES = {
   kr3: ['task','milestone','event'],
   mx:  ['task','milestone','metric'],
   ai:  ['task','milestone','ai'],
+  pm:  ['task','milestone','event'],
 };
 
 const TYPE_LABELS = { task:'Task', milestone:'Milestone', event:'Event', metric:'Metric', ai:'AI Skill' };
@@ -385,6 +390,7 @@ const DEFAULT_STATE = {
     { id:'kr1', label:'KR1', sublabel:'Findability',        color:'#1D4ED8', bg:'#EFF6FF', target:'Website Apr 30\nSEO/GEO via Claude\nComparison pages' },
     { id:'kr2', label:'KR2', sublabel:'Credibility',         color:'#16A34A', bg:'#F0FDF4', target:'3 case studies live\n15+ G2/Capterra reviews by Jun 30'  },
     { id:'kr3', label:'KR3', sublabel:'DemandGen',           color:'#EA580C', bg:'#FFF7ED', target:'120 qualified MQLs\n≥30% from target accounts'          },
+    { id:'pm',  label:'PM',  sublabel:'Product Marketing',   color:'#0E7490', bg:'#ECFEFF', target:'Product launches\nEnablement content\nGTM coordination' },
     { id:'mx',  label:'📊',  sublabel:'Metrics & Reporting', color:'#475569', bg:'#F8FAFC', target:'Weekly KPI pulse\nBi-weekly KR review (every sprint end)'},
     { id:'ai',  label:'🤖',  sublabel:'Claude Skills',       color:'#7E22CE', bg:'#FAF5FF', target:'3 skills/sprint\n1 per team member' },
   ],
@@ -516,6 +522,10 @@ const DEFAULT_STATE = {
       { id:'ms6a', text:'🔁 Final weekly KPI pulse', type:'metric', detail:'' },
       { id:'ms6b', text:'📋 Q2 KR final review — all 3 KRs', type:'milestone', detail:'Exec presentation · Q3 hand-off plan' },
     ],
+    'pm-s1': [
+      { id:'pms1a', text:'🚀 MCP Connector Launch — Video & Page', type:'milestone', detail:'' },
+    ],
+    'pm-s2': [], 'pm-s3': [], 'pm-s4': [], 'pm-s5': [], 'pm-s6': [],
     'ai-s1': [
       { id:'as1a', text:'🏦 Build Skills Bank', type:'milestone', detail:'All ideas catalogued: SEO optimizer · CS draft builder · MQL screener · LinkedIn formatter · KPI reporter · Email automator · Comparison page gen · Brief generator · Review requester · Ad copy tester' },
       { id:'as1b', text:'Sprint 1 first picks — 3 chosen by team', type:'ai', detail:'' },
@@ -566,6 +576,10 @@ function loadState() {
       const parsed = JSON.parse(saved);
       // Always apply latest lane labels without touching cards or events
       parsed.lanes = clone(DEFAULT_STATE.lanes);
+      // Merge any new card cells (e.g. new lanes) without overwriting existing ones
+      Object.keys(DEFAULT_STATE.cards).forEach(key => {
+        if (!parsed.cards[key]) parsed.cards[key] = clone(DEFAULT_STATE.cards[key]);
+      });
       return parsed;
     }
   } catch(e) {}
