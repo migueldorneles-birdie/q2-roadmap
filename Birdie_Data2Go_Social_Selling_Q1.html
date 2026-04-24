@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Birdie × Data2Go — dois meses em social selling</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --ink: #0a1f1c;
+  --ink-soft: #14332e;
+  --paper: #f5f1e8;
+  --paper-soft: #ebe4d3;
+  --birdie: #00c389;
+  --birdie-deep: #007a54;
+  --coral: #e85d4a;
+  --amber: #e8a93b;
+  --line: #0a1f1c22;
+  --line-strong: #0a1f1c44;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.55;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(circle at 20% 10%, #00c38911 0%, transparent 40%),
+    radial-gradient(circle at 80% 90%, #e8a93b15 0%, transparent 40%);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+/* ==================== HEADER ==================== */
+header {
+  padding: 80px 0 60px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+
+.meta-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--birdie-deep);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.meta-tag::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--birdie-deep);
+}
+
+h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 82px;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 32px;
+}
+
+h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--birdie-deep);
+}
+
+.subtitle {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink-soft);
+  max-width: 680px;
+  margin-bottom: 48px;
+}
+
+.header-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+.header-stat .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+
+.header-stat .value {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.header-stat .sub {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+/* ==================== SECTIONS ==================== */
+section {
+  padding: 100px 0;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--birdie-deep);
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin-bottom: 12px;
+}
+
+h2 em {
+  font-style: italic;
+  color: var(--birdie-deep);
+}
+
+.section-lead {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin-bottom: 56px;
+  max-width: 720px;
+}
+
+/* ==================== KPI GRID ==================== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line-strong);
+  border: 1px solid var(--line-strong);
+  margin-bottom: 56px;
+}
+
+.kpi {
+  background: var(--paper);
+  padding: 32px 28px;
+  position: relative;
+}
+
+.kpi-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+}
+
+.kpi-value {
+  font-family: 'Fraunces', serif;
+  font-size: 52px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.kpi-value .unit {
+  font-size: 22px;
+  color: var(--ink-soft);
+  margin-left: 4px;
+}
+
+.kpi-delta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+.kpi-delta.pos  { background: #00c38922; color: var(--birdie-deep); }
+.kpi-delta.neg  { background: #e85d4a22; color: var(--coral); }
+.kpi-delta.neutral { background: #0a1f1c11; color: var(--ink-soft); }
+
+.kpi-note {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 12px;
+  line-height: 1.4;
+}
+
+/* ==================== TWO COL ==================== */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 56px;
+}
+
+.chart-card {
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  padding: 32px;
+}
+
+.chart-card-full {
+  grid-column: 1 / -1;
+}
+
+.chart-title {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.chart-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 24px;
+}
+
+.chart-wrapper {
+  position: relative;
+  height: 320px;
+}
+
+/* ==================== NARRATIVA ==================== */
+.narrativa {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 48px;
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+}
+
+.narrativa:first-of-type { border-top: none; padding-top: 0; }
+
+.narrativa-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--birdie-deep);
+  padding-top: 8px;
+}
+
+.narrativa-content h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin-bottom: 16px;
+}
+
+.narrativa-content p {
+  font-size: 15.5px;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+  max-width: 780px;
+}
+
+.narrativa-content .highlight {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+/* ==================== TABLE ==================== */
+.eff-table {
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  margin-bottom: 48px;
+  overflow: hidden;
+}
+
+.eff-header-3 {
+  display: grid;
+  grid-template-columns: 2fr 2fr 3fr;
+  padding: 16px 24px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.eff-row-3 {
+  display: grid;
+  grid-template-columns: 2fr 2fr 3fr;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+  transition: background 0.15s;
+}
+
+.eff-row-3:hover { background: var(--paper-soft); }
+.eff-row-3:last-child { border-bottom: none; }
+.eff-row-3.hero { background: #00c38911; }
+.eff-row-3.hero:hover { background: #00c38922; }
+
+.eff-name {
+  font-family: 'Fraunces', serif;
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.eff-chip {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 2px;
+  margin-top: 4px;
+}
+
+.chip-t1  { background: #0a1f1c; color: var(--paper); }
+.chip-t2  { background: var(--amber); color: var(--ink); }
+.chip-mid { background: var(--birdie); color: white; }
+
+/* ==================== QUOTE ==================== */
+.quote-block {
+  padding: 80px 0;
+  text-align: center;
+  background: linear-gradient(135deg, #00c38908 0%, transparent 50%, #e8a93b08 100%);
+  margin: 48px -48px;
+  padding-left: 48px;
+  padding-right: 48px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.quote {
+  font-family: 'Fraunces', serif;
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  max-width: 900px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+.quote em {
+  color: var(--birdie-deep);
+  font-weight: 400;
+}
+
+.quote-attr {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 24px;
+}
+
+/* ==================== MATRIX ==================== */
+.matrix {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: var(--line-strong);
+  border: 1px solid var(--line-strong);
+}
+
+.matrix-cell {
+  background: var(--paper);
+  padding: 40px 32px;
+  min-height: 220px;
+  position: relative;
+}
+
+.matrix-cell.good-fast { background: linear-gradient(135deg, #00c38922 0%, var(--paper) 100%); }
+.matrix-cell.good-slow { background: linear-gradient(135deg, #e8a93b22 0%, var(--paper) 100%); }
+.matrix-cell.bad-fast  { background: linear-gradient(135deg, #e8a93b22 0%, var(--paper) 100%); }
+.matrix-cell.bad-slow  { background: linear-gradient(135deg, #e85d4a22 0%, var(--paper) 100%); }
+
+.matrix-head {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+}
+
+.matrix-title {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin-bottom: 16px;
+}
+
+.matrix-body {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.matrix-body strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ==================== NEXT STEPS ==================== */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.step-card {
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  padding: 32px;
+  position: relative;
+}
+
+.step-card.priority-1 {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.step-card.priority-1 .step-num,
+.step-card.priority-1 .step-body { color: #f5f1e8aa; }
+
+.step-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+}
+
+.step-title {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin-bottom: 14px;
+}
+
+.step-body {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+/* ==================== FOOTER ==================== */
+footer {
+  padding: 60px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 900px) {
+  .container { padding: 0 24px; }
+  h1 { font-size: 48px; }
+  h2 { font-size: 36px; }
+  .header-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .two-col { grid-template-columns: 1fr; }
+  .narrativa { grid-template-columns: 1fr; gap: 16px; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .matrix { grid-template-columns: 1fr; }
+  .eff-header-3, .eff-row-3 { grid-template-columns: 1fr 1fr; }
+  .eff-header-3 > *:last-child, .eff-row-3 > *:last-child { display: none; }
+  .quote { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- ========== HEADER ========== -->
+<header>
+  <div class="meta-tag">Fechamento Executivo · Q1 2026</div>
+  <h1>Birdie × Data2Go<br><em>dois meses em social selling.</em></h1>
+  <p class="subtitle">Um projeto de outreach no LinkedIn para líderes de CX nos Estados Unidos. O que o canal provou, o que o formato de jantar exclusivo ensinou, e o que vale escalar nos próximos trimestres.</p>
+
+  <div class="header-grid">
+    <div class="header-stat">
+      <div class="label">Período</div>
+      <div class="value">8 sem.</div>
+      <div class="sub">13/02/26 a 09/04/26</div>
+    </div>
+    <div class="header-stat">
+      <div class="label">Convites enviados</div>
+      <div class="value">421</div>
+      <div class="sub">Dan: 216 · Pat: 205</div>
+    </div>
+    <div class="header-stat">
+      <div class="label">MQLs gerados</div>
+      <div class="value">23</div>
+      <div class="sub">12 dinners · 11 waitlist</div>
+    </div>
+    <div class="header-stat">
+      <div class="label">Taxa resposta → MQL</div>
+      <div class="value">70%</div>
+      <div class="sub">De 33 respostas, 23 interessados</div>
+    </div>
+  </div>
+</header>
+
+<!-- ========== SEÇÃO 1: RESULTADOS ========== -->
+<section>
+  <div class="section-label">01 · O que os números dizem</div>
+  <h2>421 convites. 23 decisores. <em>O funil funcionou.</em></h2>
+  <p class="section-lead">A campanha gerou 23 MQLs em dois meses de outreach via LinkedIn. A taxa de 70% de conversão entre resposta e interesse é o número mais importante: quando o formato certo encontra o interlocutor certo, a proposta de valor da Birdie não precisa se esforçar para convencer.</p>
+
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-title">Convites enviados</div>
+      <div class="kpi-value">421</div>
+      <span class="kpi-delta neutral">Dan 216 · Pat 205</span>
+      <div class="kpi-note">LinkedIn · 2 perfis ativos em paralelo</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-title">Conexões aceitas</div>
+      <div class="kpi-value">58<span class="unit">14%</span></div>
+      <span class="kpi-delta neutral">Dan 15% · Pat 12,6%</span>
+      <div class="kpi-note">Taxa dentro do benchmark para ICP enterprise nos EUA</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-title">Respostas LinkedIn</div>
+      <div class="kpi-value">33<span class="unit">56%</span></div>
+      <span class="kpi-delta pos">▲ 56% das conexões responderam</span>
+      <div class="kpi-note">De cada 2 conexões, mais de 1 entrou em conversa</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-title">Interessados (MQL)</div>
+      <div class="kpi-value">23<span class="unit">70%</span></div>
+      <span class="kpi-delta pos">▲ 70% das respostas viraram MQL</span>
+      <div class="kpi-note">O sinal mais forte do projeto: formato e ICP alinhados</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="chart-card">
+      <div class="chart-title">Funil de social selling</div>
+      <div class="chart-sub">421 convites → 23 MQLs · cada etapa de conversão</div>
+      <div class="chart-wrapper">
+        <canvas id="chartFunnel"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Dan vs Pat · desempenho comparado</div>
+      <div class="chart-sub">Conexões, respostas e interessados por perfil</div>
+      <div class="chart-wrapper">
+        <canvas id="chartSdrs"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Fraunces',serif;font-weight:400;font-size:28px;margin-bottom:8px;letter-spacing:-0.015em;">
+    Contas e contatos que confirmaram presença nos jantares
+  </h3>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:28px;">12 MQLs · Dinner confirmed</p>
+
+  <div class="eff-table">
+    <div class="eff-header-3">
+      <div>Empresa</div>
+      <div>Contato</div>
+      <div>Cargo</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">American Airlines</div><div class="eff-chip chip-t1">Enterprise</div></div>
+      <div style="font-size:15px;font-weight:500;">Joshua Neumann</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Duty Manager, Customer Experience Administration</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">Salesforce</div><div class="eff-chip chip-t1">Enterprise</div></div>
+      <div style="font-size:15px;font-weight:500;">Leah Clark</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Senior Director, Product Management – Predictive CS Score, Agentic Solutions</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">Salesforce</div><div class="eff-chip chip-t1">Enterprise</div></div>
+      <div style="font-size:15px;font-weight:500;">Dwight Keith</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Strategic Account Director</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">JPMorgan Chase</div><div class="eff-chip chip-t1">Enterprise</div></div>
+      <div style="font-size:15px;font-weight:500;">Joshua Gary Mausolf</div>
+      <div style="font-size:14px;color:var(--ink-soft);">VP, User Experience Research Lead</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">Slack</div><div class="eff-chip chip-t1">Enterprise</div></div>
+      <div style="font-size:15px;font-weight:500;">Harveen Birgi</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Customer Experience Leader</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">DoorDash</div><div class="eff-chip chip-t1">Enterprise</div></div>
+      <div style="font-size:15px;font-weight:500;">Fenton Chau</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Global CX</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">Monday.com</div><div class="eff-chip chip-mid">Mid-Market</div></div>
+      <div style="font-size:15px;font-weight:500;">Becky Gedmin</div>
+      <div style="font-size:14px;color:var(--ink-soft);">CX Online Strategy Team Lead</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">PrimePay</div><div class="eff-chip chip-mid">Mid-Market</div></div>
+      <div style="font-size:15px;font-weight:500;">Ashley Rozovics</div>
+      <div style="font-size:14px;color:var(--ink-soft);">VP Customer Success</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">TodayTix Group</div><div class="eff-chip chip-mid">Mid-Market</div></div>
+      <div style="font-size:15px;font-weight:500;">Jillian Katz</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Associate Director of CX Support</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">One Inc</div><div class="eff-chip chip-mid">Mid-Market</div></div>
+      <div style="font-size:15px;font-weight:500;">Aaron Ford</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Enterprise Program Manager – CX Operations</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">GEHA Health</div><div class="eff-chip chip-mid">Mid-Market</div></div>
+      <div style="font-size:15px;font-weight:500;">Carizma Forbes</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Senior Customer Experience Analyst</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">Own Your What</div><div class="eff-chip chip-t2">Founder</div></div>
+      <div style="font-size:15px;font-weight:500;">Kristin Estes</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Founder</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SEÇÃO 2: CANAL ========== -->
+<section>
+  <div class="section-label">02 · Análise por canal</div>
+  <h2>LinkedIn converteu. <em>E-mail não existiu.</em></h2>
+  <p class="section-lead">Dois canais foram testados em paralelo. O resultado foi assimétrico ao extremo: LinkedIn gerou 23 MQLs, e-mail gerou zero. Para este ICP, o canal de outreach é LinkedIn — sem exceção.</p>
+
+  <div class="narrativa">
+    <div class="narrativa-label">LinkedIn</div>
+    <div class="narrativa-content">
+      <h3>O canal que funciona para líderes de CX enterprise</h3>
+      <p>421 convites. 58 conexões. 33 respostas. 23 MQLs. O LinkedIn provou ser o único canal viável para alcançar VP, Director e CCO de CX em empresas enterprise nos EUA. A combinação de <span class="highlight">perfil otimizado + mensagem personalizada + proposta de valor de alto nível</span> criou uma jornada que converte.</p>
+      <p>O detalhe mais relevante não é a taxa de convite→conexão (14%, razoável para o ICP). É a taxa de resposta→MQL: 70%. Isso significa que o problema da operação não é persuasão — é volume qualificado. O mecanismo funciona. O que precisa escalar é a entrada do funil: mais convites para os perfis certos, nas cidades certas, ancorados em eventos reais.</p>
+    </div>
+  </div>
+
+  <div class="narrativa">
+    <div class="narrativa-label">E-mail</div>
+    <div class="narrativa-content">
+      <h3>179 e-mails. 54 abertos. Zero interessados.</h3>
+      <p>O canal de e-mail foi testado com 179 disparos. A taxa de abertura foi razoável — 30% — mas produziu apenas 3 respostas e <strong>nenhum interessado sequer.</strong> O e-mail captura atenção suficiente para ser aberto, mas não chega perto de converter este ICP.</p>
+      <p>A conclusão é objetiva: <span class="highlight">líderes de CX enterprise que respondem a convites para jantares exclusivos via LinkedIn simplesmente não convertem por cold email.</span> Continuar testando e-mail para este público é garantir zero retorno. O próximo ciclo deve eliminar o canal do playbook de outreach e redirecionar essa atenção operacional para escalar o que funciona.</p>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="chart-card chart-card-full">
+      <div class="chart-title">LinkedIn vs E-mail · o que cada canal entregou</div>
+      <div class="chart-sub">MQLs gerados por canal · Q1 2026</div>
+      <div class="chart-wrapper" style="height: 260px;">
+        <canvas id="chartCanal"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SEÇÃO 3: WAITLIST ========== -->
+<section>
+  <div class="section-label">03 · O sinal da fila de espera</div>
+  <h2>A waitlist <em>revelou demanda real.</em></h2>
+  <p class="section-lead">11 empresas foram para lista de espera — não por falta de interesse, mas por falta de capacidade nos jantares planejados. Entre elas: Canva (CCO), Airbnb, Instacart (2 contatos), Fiserv e Aetna/CVS Health. Esse pipeline existe, está aquecido, e espera um próximo evento para ser ativado.</p>
+
+  <div class="quote-block">
+    <p class="quote">A waitlist não é fracasso de capacidade. É <em>sinal de que o formato vale escalar.</em> 11 empresas disseram sim para um jantar que ainda não existia.</p>
+    <div class="quote-attr">Análise Q1 2026 · Birdie × Data2Go</div>
+  </div>
+
+  <h3 style="font-family:'Fraunces',serif;font-weight:400;font-size:28px;margin-bottom:8px;letter-spacing:-0.015em;margin-top:48px;">
+    Pipeline aquecido — waitlist para o próximo ciclo
+  </h3>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:28px;">11 MQLs · Waitlist confirmed</p>
+
+  <div class="eff-table">
+    <div class="eff-header-3">
+      <div>Empresa</div>
+      <div>Contato</div>
+      <div>Cargo</div>
+    </div>
+    <div class="eff-row-3 hero">
+      <div><div class="eff-name">Canva</div><div class="eff-chip chip-t1">CCO · Tier 1</div></div>
+      <div style="font-size:15px;font-weight:500;">Rob Giglio</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Chief Customer Officer – Sales / Success / Operations</div>
+    </div>
+    <div class="eff-row-3 hero">
+      <div><div class="eff-name">Airbnb</div><div class="eff-chip chip-t1">Tier 1</div></div>
+      <div style="font-size:15px;font-weight:500;">Phoebe Risher</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Manager, Operations & Customer Experience</div>
+    </div>
+    <div class="eff-row-3 hero">
+      <div><div class="eff-name">Instacart</div><div class="eff-chip chip-t1">Tier 1</div></div>
+      <div style="font-size:15px;font-weight:500;">Izzy Knopper</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Director of Customer Experience Technology</div>
+    </div>
+    <div class="eff-row-3 hero">
+      <div><div class="eff-name">Instacart</div><div class="eff-chip chip-t1">Tier 1</div></div>
+      <div style="font-size:15px;font-weight:500;">Justin M.</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Customer Experience Content Strategist</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">Aetna / CVS Health</div><div class="eff-chip chip-t2">VP · Tier 1</div></div>
+      <div style="font-size:15px;font-weight:500;">Shawn R.</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Associate VP, Member Experience & Retention: Medicare</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">Fiserv</div><div class="eff-chip chip-t2">Head</div></div>
+      <div style="font-size:15px;font-weight:500;">Brandy Wood</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Head of Client Experience Product</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">Bill</div><div class="eff-chip chip-mid">CS Leader</div></div>
+      <div style="font-size:15px;font-weight:500;">Keith Gruver</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Global Customer Success Leader</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">Zuora</div><div class="eff-chip chip-mid">Director</div></div>
+      <div style="font-size:15px;font-weight:500;">Shahab Rahmani</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Director, Customer Experience</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">Oscar Health</div><div class="eff-chip chip-mid">PM</div></div>
+      <div style="font-size:15px;font-weight:500;">Natalie Owcharuk</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Product Strategy Manager, Member Experience</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">Movable Ink</div><div class="eff-chip chip-mid">CX</div></div>
+      <div style="font-size:15px;font-weight:500;">TJ Prince</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Client Experience, Amazon</div>
+    </div>
+    <div class="eff-row-3">
+      <div><div class="eff-name">DLL</div><div class="eff-chip chip-mid">PM</div></div>
+      <div style="font-size:15px;font-weight:500;">Vlada Lukina</div>
+      <div style="font-size:14px;color:var(--ink-soft);">Customer-Centric Digital Product Management</div>
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top: 0;">
+    <div class="chart-card">
+      <div class="chart-title">Distribuição de MQLs</div>
+      <div class="chart-sub">Dinners vs Waitlist · por SDR</div>
+      <div class="chart-wrapper" style="height:280px;">
+        <canvas id="chartMqls"></canvas>
+      </div>
+    </div>
+    <div class="chart-card" style="display:flex;flex-direction:column;justify-content:center;gap:32px;padding:40px;">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px;">Tier dos contatos na waitlist</div>
+        <div style="font-family:'Fraunces',serif;font-size:42px;font-weight:300;line-height:1;letter-spacing:-0.02em;margin-bottom:4px;">4</div>
+        <div style="font-size:13px;color:var(--ink-soft);">empresas Tier 1 de alto perfil<br>(Canva, Airbnb, Instacart x2)</div>
+      </div>
+      <div style="border-top:1px solid var(--line);padding-top:28px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px;">Empresa de maior seniority</div>
+        <div style="font-family:'Fraunces',serif;font-size:28px;font-weight:400;line-height:1.1;letter-spacing:-0.015em;margin-bottom:4px;">Canva CCO</div>
+        <div style="font-size:13px;color:var(--ink-soft);">Rob Giglio — Chief Customer Officer<br>foi para waitlist, nunca para dinner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SEÇÃO 4: APRENDIZADOS ========== -->
+<section>
+  <div class="section-label">04 · Aprendizados</div>
+  <h2>O que dois meses <em>ensinaram.</em></h2>
+  <p class="section-lead">Quatro padrões emergiram com clareza. São os princípios que devem guiar a operação de social selling da Birdie nos próximos trimestres — independente da agência ou das ferramentas usadas.</p>
+
+  <div class="matrix">
+    <div class="matrix-cell good-fast">
+      <div class="matrix-head">Aprendizado 01 · O que ficou claro</div>
+      <div class="matrix-title">O formato bate a mensagem</div>
+      <div class="matrix-body">O gatilho de conversão não foi o copy — foi o convite para um jantar exclusivo de líderes de CX. <strong>70% das respostas viraram MQL:</strong> quando o formato está certo, a mensagem não precisa convencer. Ela só precisa não atrapalhar. Qualquer escala futura deve preservar a exclusividade e o nível da proposta de valor do evento.</div>
+    </div>
+    <div class="matrix-cell good-slow">
+      <div class="matrix-head">Aprendizado 02 · Canal validado</div>
+      <div class="matrix-title">LinkedIn-first é inegociável para este ICP</div>
+      <div class="matrix-body">O teste com e-mail foi conclusivo: <strong>zero conversões em 179 disparos.</strong> Líderes de CX enterprise nos EUA respondem a convites personalizados no LinkedIn. O canal de outreach para o modelo de jantar é LinkedIn — sem exceções e sem mais experimentos com e-mail para este público específico.</div>
+    </div>
+    <div class="matrix-cell bad-fast">
+      <div class="matrix-head">Aprendizado 03 · O que precisa mudar</div>
+      <div class="matrix-title">ICP operacionalizado bate ICP descrito</div>
+      <div class="matrix-body">Ter a definição do cliente ideal não é suficiente. É preciso <strong>traduzir o ICP em filtros pesquisáveis no LinkedIn:</strong> cargos exatos, portes de empresa, setores, geolocalização, tempo no cargo, sinais de tecnologia. Sem isso, a qualidade das listas é inconsistente e o volume de convites qualificados fica abaixo do potencial real da operação.</div>
+    </div>
+    <div class="matrix-cell bad-slow">
+      <div class="matrix-head">Aprendizado 04 · Antes do próximo evento</div>
+      <div class="matrix-title">Geografia precede calendário</div>
+      <div class="matrix-body">Definir datas e cidades de jantar sem antes validar onde as contas-alvo estão concentradas reduz a taxa de conversão e dispersa o esforço de convite. <strong>O roadmap de eventos de Q2/Q3 deve começar com um mapa de contas por cidade,</strong> garantindo que cada jantar aconteça onde a maior densidade de prospects do ICP está fisicamente presente.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SEÇÃO 5: PRÓXIMOS PASSOS ========== -->
+<section>
+  <div class="section-label">05 · Plano adiante</div>
+  <h2>O que <em>vale escalar</em> no próximo ciclo.</h2>
+  <p class="section-lead">Seis movimentos para Q2 e Q3. A base está construída — o formato funciona, o canal está validado, e há 11 contatos aquecidos esperando uma razão para avançar. O que falta é execução com mais estrutura na entrada do funil.</p>
+
+  <div class="steps-grid">
+    <div class="step-card priority-1">
+      <div class="step-num">Prioridade 01 · Agir agora</div>
+      <div class="step-title">Ativar os 11 contatos da waitlist</div>
+      <div class="step-body">Canva (CCO), Airbnb, Instacart (2x), Fiserv, Aetna — são contas que sinalizaram interesse real e ainda estão sem próximo passo. Cada uma merece abordagem individualizada, não fluxo genérico. Esse pipeline existe e está aquecido hoje.</div>
+    </div>
+    <div class="step-card priority-1">
+      <div class="step-num">Prioridade 02 · Alto ROI</div>
+      <div class="step-title">Calendário de eventos ancorado em dados geográficos</div>
+      <div class="step-body">Antes de fechar datas e cidades, mapear concentração de contas-alvo por praça com LinkedIn Sales Navigator. Identificar as 3 cidades com maior densidade de ICP e construir o roadmap de eventos a partir disso — não ao contrário.</div>
+    </div>
+    <div class="step-card priority-1">
+      <div class="step-num">Prioridade 03 · Fundação</div>
+      <div class="step-title">Documento de ICP com filtros operacionais</div>
+      <div class="step-body">Criar e manter um documento de ICP operacional: cargos exatos (com variações de título), porte de empresa, setores priorizados, geolocalização, tempo no cargo e sinais de engajamento com CX. Esse documento é o ponto de partida de qualquer campanha futura.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Prioridade 04</div>
+      <div class="step-title">Escalar para 3 perfis de SDR</div>
+      <div class="step-body">Dan e Pat produziram resultados similares com perfis distintos — o playbook é replicável. Um terceiro operador aumenta volume de convites qualificados sem comprometer conversão, desde que ICP e mensagens estejam documentados antes do onboarding.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Prioridade 05</div>
+      <div class="step-title">Eliminar e-mail do playbook de outreach</div>
+      <div class="step-body">Zero MQLs em 179 disparos. O custo de oportunidade de manter e-mail no mix é atenção operacional que poderia ir para escalar LinkedIn. Para este ICP — líderes de CX enterprise nos EUA — o canal é LinkedIn e ponto. Qualquer e-mail daqui em diante deve ser para contatos já conectados, não para cold outreach.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Prioridade 06 · Teste novo</div>
+      <div class="step-title">Formato virtual para Tier 1 sem mobilidade</div>
+      <div class="step-body">Canva, Airbnb e Instacart foram para waitlist — possivelmente porque os jantares não aconteceram nas suas cidades. Testar um roundtable virtual fechado (8–10 pessoas, curadoria Birdie, tema de IA em CX) para capturar esse segmento sem depender de presença física.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Birdie × Data2Go · Social Selling Q1 2026</div>
+  <div>dois meses em social selling</div>
+  <div>Abril 2026</div>
+</footer>
+
+</div>
+
+<script>
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.color = '#14332e';
+Chart.defaults.borderColor = '#0a1f1c22';
+
+const ink = '#0a1f1c';
+const birdie = '#00c389';
+const birdieDeep = '#007a54';
+const coral = '#e85d4a';
+const amber = '#e8a93b';
+const paper = '#f5f1e8';
+
+// ========== CHART 1: Funil ==========
+new Chart(document.getElementById('chartFunnel'), {
+  type: 'bar',
+  data: {
+    labels: ['Convites enviados', 'Conexões aceitas', 'Respostas LinkedIn', 'Interessados (MQL)'],
+    datasets: [{
+      label: 'Quantidade',
+      data: [421, 58, 33, 23],
+      backgroundColor: ['#0a1f1c33', '#0a1f1c55', amber, birdie],
+      borderRadius: 2,
+      barThickness: 44
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    indexAxis: 'y',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: ink,
+        titleFont: { size: 12 },
+        bodyFont: { size: 13 },
+        callbacks: {
+          label: ctx => {
+            const pcts = ['', ' → 14% dos convites', ' → 56% das conexões', ' → 70% das respostas'];
+            return ` ${ctx.raw}${pcts[ctx.dataIndex]}`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        grid: { color: '#0a1f1c11' },
+        ticks: { font: { size: 11 } }
+      },
+      y: {
+        grid: { display: false },
+        ticks: { font: { size: 12, weight: '500' } }
+      }
+    }
+  }
+});
+
+// ========== CHART 2: Dan vs Pat ==========
+new Chart(document.getElementById('chartSdrs'), {
+  type: 'bar',
+  data: {
+    labels: ['Conexões', 'Respostas', 'Interessados'],
+    datasets: [
+      {
+        label: 'Dan',
+        data: [32, 16, 11],
+        backgroundColor: birdieDeep,
+        borderRadius: 2,
+        barThickness: 36
+      },
+      {
+        label: 'Pat',
+        data: [26, 17, 12],
+        backgroundColor: birdie,
+        borderRadius: 2,
+        barThickness: 36
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { font: { size: 11 }, usePointStyle: true, pointStyle: 'rect', padding: 16 }
+      },
+      tooltip: {
+        backgroundColor: ink,
+        callbacks: {
+          label: ctx => ` ${ctx.dataset.label}: ${ctx.raw}`
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: '#0a1f1c11' },
+        ticks: { font: { size: 11 } }
+      },
+      x: {
+        grid: { display: false },
+        ticks: { font: { size: 12, weight: '500' } }
+      }
+    }
+  }
+});
+
+// ========== CHART 3: Canal ==========
+new Chart(document.getElementById('chartCanal'), {
+  type: 'bar',
+  data: {
+    labels: ['LinkedIn (421 convites · 2 perfis)', 'E-mail (179 enviados · 30% de abertura)'],
+    datasets: [{
+      label: 'MQLs gerados',
+      data: [23, 0],
+      backgroundColor: [birdie, coral],
+      borderRadius: 2,
+      barThickness: 88
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: ink,
+        callbacks: {
+          label: ctx => ` MQLs gerados: ${ctx.raw}`
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 30,
+        grid: { color: '#0a1f1c11' },
+        ticks: { font: { size: 11 }, stepSize: 5 },
+        title: { display: true, text: 'MQLs gerados', font: { size: 11 } }
+      },
+      x: {
+        grid: { display: false },
+        ticks: { font: { size: 13, weight: '500' } }
+      }
+    }
+  }
+});
+
+// ========== CHART 4: MQL distribution ==========
+new Chart(document.getElementById('chartMqls'), {
+  type: 'bar',
+  data: {
+    labels: ['Dinners', 'Waitlist'],
+    datasets: [
+      {
+        label: 'Dan',
+        data: [7, 4],
+        backgroundColor: birdieDeep,
+        borderRadius: 2,
+        barThickness: 44
+      },
+      {
+        label: 'Pat',
+        data: [5, 7],
+        backgroundColor: birdie,
+        borderRadius: 2,
+        barThickness: 44
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { font: { size: 11 }, usePointStyle: true, pointStyle: 'rect', padding: 16 }
+      },
+      tooltip: {
+        backgroundColor: ink,
+        callbacks: {
+          label: ctx => ` ${ctx.dataset.label}: ${ctx.raw} contatos`
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        stacked: false,
+        grid: { color: '#0a1f1c11' },
+        ticks: { font: { size: 11 }, stepSize: 2 }
+      },
+      x: {
+        grid: { display: false },
+        ticks: { font: { size: 13, weight: '500' } }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
