@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Q2 Sprint #4 — Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f7f5;
+    --surface: #ffffff;
+    --border: #e8e6e1;
+    --text: #1a1a1a;
+    --muted: #6b6b6b;
+    --accent: #0057ff;
+    --accent-light: #eff3ff;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 48px 24px 80px;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .header {
+    margin-bottom: 48px;
+  }
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .badge {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 99px;
+    background: var(--accent);
+    color: #fff;
+  }
+  .badge.quarter { background: #1a1a1a; }
+  .date-label {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .header .subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 32px 0;
+  }
+
+  /* OKR PULSE TABLE */
+  .okr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .okr-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .okr-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .okr-card.red::before { background: var(--red); }
+  .okr-card.yellow::before { background: var(--yellow); }
+  .okr-card.amber::before { background: var(--orange); }
+
+  .okr-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .okr-name {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .okr-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .okr-metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .okr-metric-label {
+    font-size: 12px;
+    color: var(--muted);
+    flex: 1;
+  }
+  .okr-metric-values {
+    text-align: right;
+    white-space: nowrap;
+  }
+  .okr-metric-current {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .okr-metric-current.red { color: var(--red); }
+  .okr-metric-current.yellow { color: var(--yellow); }
+  .okr-metric-current.green { color: var(--green); }
+  .okr-metric-target {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .progress-bar-wrap {
+    margin-top: 12px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+  .progress-bar.red { background: var(--red); }
+  .progress-bar.yellow { background: var(--yellow); }
+  .progress-bar.green { background: var(--green); }
+  .progress-pct {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    text-align: right;
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 48px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .section-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .section-icon.blue { background: var(--accent-light); }
+  .section-icon.green { background: var(--green-light); }
+  .section-icon.orange { background: var(--orange-light); }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .section-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+    margin-top: 1px;
+  }
+
+  /* BLOCKS */
+  .blocks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .block.full { grid-column: span 2; }
+  .block-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  /* ITEM LISTS */
+  .item-list { list-style: none; }
+  .item-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .item-list li:last-child { border-bottom: none; }
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .status-dot.green { background: var(--green); }
+  .status-dot.yellow { background: var(--yellow); }
+  .status-dot.red { background: var(--red); }
+  .item-text { flex: 1; }
+  .item-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 99px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .item-tag.done { background: var(--green-light); color: var(--green); }
+  .item-tag.pending { background: var(--yellow-light); color: var(--yellow); }
+  .item-tag.moved { background: #f3f4f6; color: #6b7280; }
+  .item-tag.risk { background: var(--red-light); color: var(--red); }
+  .item-tag.delayed { background: var(--orange-light); color: var(--orange); }
+
+  /* RISKS */
+  .risk-list { display: flex; flex-direction: column; gap: 10px; }
+  .risk-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #fafaf9;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .risk-item .risk-icon { font-size: 16px; flex-shrink: 0; }
+  .risk-item strong { font-weight: 600; }
+
+  /* NEXT WEEK */
+  .priorities { display: flex; flex-direction: column; gap: 10px; }
+  .priority-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .priority-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .priority-content { flex: 1; }
+  .priority-title { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
+  .priority-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* CONTEXT CALLOUT */
+  .context-callout {
+    background: #f0f4ff;
+    border: 1px solid #c7d7ff;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 12px;
+    color: #3b4d8a;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .context-callout strong { font-weight: 600; }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .footer strong { color: var(--text); font-weight: 600; }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .okr-grid { grid-template-columns: 1fr; }
+    .blocks { grid-template-columns: 1fr; }
+    .block.full { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-meta">
+      <span class="badge quarter">Q2 · Sprint #4</span>
+      <span class="date-label">Review — Friday, June 5, 2026</span>
+    </div>
+    <h1>Marketing Sprint Review</h1>
+    <p class="subtitle">Findability · Credibility · Demand Generation</p>
+  </div>
+
+  <!-- OKR PULSE -->
+  <div class="okr-grid">
+
+    <div class="okr-card red">
+      <div class="okr-label">KR GTM US 1.1</div>
+      <div class="okr-name">Findability — 2× US traffic growth QoQ</div>
+      <div class="okr-metrics">
+        <div class="okr-metric">
+          <span class="okr-metric-label">Active users</span>
+          <div class="okr-metric-values">
+            <div class="okr-metric-current red">810</div>
+            <div class="okr-metric-target">target 2,944</div>
+          </div>
+        </div>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar red" style="width:28%"></div></div>
+      <div class="progress-pct">28% of target</div>
+    </div>
+
+    <div class="okr-card yellow">
+      <div class="okr-label">KR GTM US 1.2</div>
+      <div class="okr-name">Credibility — Case studies &amp; G2 reviews</div>
+      <div class="okr-metrics">
+        <div class="okr-metric">
+          <span class="okr-metric-label">Case studies live</span>
+          <div class="okr-metric-values">
+            <div class="okr-metric-current yellow">1</div>
+            <div class="okr-metric-target">target 3</div>
+          </div>
+        </div>
+        <div class="okr-metric">
+          <span class="okr-metric-label">G2 reviews</span>
+          <div class="okr-metric-values">
+            <div class="okr-metric-current yellow">12</div>
+            <div class="okr-metric-target">target 15</div>
+          </div>
+        </div>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar yellow" style="width:80%"></div></div>
+      <div class="progress-pct">G2 at 80% · Case studies at 33%</div>
+    </div>
+
+    <div class="okr-card amber">
+      <div class="okr-label">KR GTM US 1.3</div>
+      <div class="okr-name">DemandGen — Qualified US leads</div>
+      <div class="okr-metrics">
+        <div class="okr-metric">
+          <span class="okr-metric-label">Qualified leads</span>
+          <div class="okr-metric-values">
+            <div class="okr-metric-current yellow">62</div>
+            <div class="okr-metric-target">target 120</div>
+          </div>
+        </div>
+        <div class="okr-metric">
+          <span class="okr-metric-label">From target accounts</span>
+          <div class="okr-metric-values">
+            <div class="okr-metric-current yellow">24</div>
+            <div class="okr-metric-target">target 36</div>
+          </div>
+        </div>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar yellow" style="width:52%"></div></div>
+      <div class="progress-pct">52% of lead target · 67% of TA target</div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- KR1 FINDABILITY -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon blue">🔍</div>
+      <div>
+        <div class="section-title">KR1 — Findability</div>
+        <div class="section-subtitle">Website launch &amp; SEO · Target: 2,944 active users · Current: 810</div>
+      </div>
+    </div>
+
+    <div class="context-callout">
+      <strong>Design context (Cícero):</strong> Product Leaders page published. Blog article covers and new LinkedIn headers shipped. Solutions by Industry images created — awaiting copy validation before publish. Bill Calculator LP and site copy (EN) now live.
+    </div>
+
+    <div class="blocks">
+      <div class="block">
+        <div class="block-title">✅ Shipped this sprint</div>
+        <ul class="item-list">
+          <li><span class="status-dot green"></span><span class="item-text">Homepage, VoC, QA, MCP Connector, Integrations, Company pages published (PT)</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">About Us, Careers, Book a Demo published</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Solutions by Role — Product Leaders page live</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Home &amp; Platform page fixes done + flowchart approved for coding</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Solutions by Use Cases approved for coding</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Enterpret compare page updated (new design)</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Schema markup live; blog covers &amp; LinkedIn headers shipped</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Bill Calculator LP + EN site copy published</span><span class="item-tag done">Done</span></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="block-title">⏳ Open / Rolling forward</div>
+        <ul class="item-list">
+          <li><span class="status-dot yellow"></span><span class="item-text">CX Leaders page (PT) — set for June 9</span><span class="item-tag pending">June 9</span></li>
+          <li><span class="status-dot yellow"></span><span class="item-text">Quality Leaders page (PT) — set for June 10</span><span class="item-tag pending">June 10</span></li>
+          <li><span class="status-dot yellow"></span><span class="item-text">Success Stories — all 7 (PT) — set for June 10</span><span class="item-tag pending">June 10</span></li>
+          <li><span class="status-dot yellow"></span><span class="item-text">Solutions by Industry — Financial Services &amp; Services Marketplaces (images ready, awaiting copy validation)</span><span class="item-tag pending">June 9–10</span></li>
+          <li><span class="status-dot yellow"></span><span class="item-text">SEO/GEO FAQs — draft needs review, publish by June 9</span><span class="item-tag pending">June 9</span></li>
+          <li><span class="status-dot yellow"></span><span class="item-text">Home &amp; Platform (Webflow) — set to publish June 11</span><span class="item-tag pending">June 11</span></li>
+          <li><span class="status-dot red"></span><span class="item-text">Blog Week 2 ("Beyond Customer Intelligence") — unpublished; content calendar month plan review delayed</span><span class="item-tag delayed">Delayed</span></li>
+          <li><span class="status-dot red"></span><span class="item-text">Compare page content (Chattermill, UnitQ) + People Templates</span><span class="item-tag moved">→ Sprint #5</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- KR2 CREDIBILITY -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon green">🏆</div>
+      <div>
+        <div class="section-title">KR2 — Credibility</div>
+        <div class="section-subtitle">Case studies &amp; G2 reviews · 1/3 case studies live · 12/15 G2 reviews</div>
+      </div>
+    </div>
+
+    <div class="blocks">
+      <div class="block">
+        <div class="block-title">✅ Shipped this sprint</div>
+        <ul class="item-list">
+          <li><span class="status-dot green"></span><span class="item-text">KOHO case study published — <em>75% reduction in contact volume, record-low contact rate at scale</em></span><span class="item-tag done">Live</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Success Stories section updated (Neon, Nubank, Agibank imagery refreshed)</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Patreon case study: Q&amp;A + draft + sent for approval</span><span class="item-tag done">In approval</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Getnet case study sent for approval</span><span class="item-tag done">In approval</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">G2 reviews: 12 collected — 3 away from Q2 target</span><span class="item-tag done">80%</span></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="block-title">⏳ Open / Blocked</div>
+        <ul class="item-list">
+          <li><span class="status-dot red"></span><span class="item-text">Nubank VoC Case Study — draft in progress, marked as delayed</span><span class="item-tag delayed">Delayed</span></li>
+          <li><span class="status-dot yellow"></span><span class="item-text">Patreon + Getnet approval: awaiting external sign-off (out of team control)</span><span class="item-tag pending">External</span></li>
+          <li><span class="status-dot yellow"></span><span class="item-text">3 more G2 reviews needed — coordinating with CS + HAWKS for final push</span><span class="item-tag pending">This week</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- KR3 DEMANDGEN -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon orange">⚡</div>
+      <div>
+        <div class="section-title">KR3 — Demand Generation</div>
+        <div class="section-subtitle">62 qualified leads · 24 from target accounts · Webinars, Events &amp; Lead Ops</div>
+      </div>
+    </div>
+
+    <div class="context-callout">
+      <strong>Intern context (Bernardo):</strong> Compiled and structured Pat's LinkedIn social engagement data. Reviewed and ICP-qualified leads from #leads-sites-visits. Cleaned the Target Accounts List (deduplication + parent/subsidiary org). Began LinkedIn Sales Navigator workflow automation. Created FAQ doc for VoC &amp; Agent QA (SEO/GEO optimized). Hosted Bill Staimos webinar. Completed all onboarding training modules.
+    </div>
+
+    <div class="blocks">
+      <div class="block">
+        <div class="block-title">✅ Lead ops &amp; infrastructure</div>
+        <ul class="item-list">
+          <li><span class="status-dot green"></span><span class="item-text">Lead Management playbook created</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Airtable SSOT: set up with views/filters; Q2 leads imported</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Q1 leads CRM import list created</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Target Accounts List cleaned — duplicates removed, orgs structured by parent/subsidiary</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Pat's LinkedIn social engagement compiled into actionable dataset</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot yellow"></span><span class="item-text">Q1 leads, legacy Hubspot, Mailchimp, Luma — import pending</span><span class="item-tag pending">In progress</span></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="block-title">✅ Webinars &amp; Events</div>
+        <ul class="item-list">
+          <li><span class="status-dot green"></span><span class="item-text">Bill Staimos Webinar — fully wrapped (promo, setup, hosting, post-webinar done)</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Bernardo trained on Riverside for future webinar ops</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Next webinar (Christen Spiro, July): topic confirmed, Luma created, promo live</span><span class="item-tag done">Scheduled</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">CX Leaders Night (June 17): planning, quotes &amp; visual content ops done</span><span class="item-tag done">On track</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Zendesk Relate: fully wrapped, leads segmented &amp; activation emails sent</span><span class="item-tag done">Done</span></li>
+          <li><span class="status-dot green"></span><span class="item-text">Toronto dinner (May 27, 10 confirmed) + NYC dinner (May 28, 5 confirmed)</span><span class="item-tag done">Done</span></li>
+        </ul>
+      </div>
+
+      <div class="block full">
+        <div class="block-title">⏳ Moved to Sprint #5 backlog</div>
+        <ul class="item-list">
+          <li><span class="status-dot red"></span><span class="item-text">Lead enrichment workflow (Airtable)</span><span class="item-tag moved">→ Sprint #5</span></li>
+          <li><span class="status-dot red"></span><span class="item-text">Email warming + outreach strategy</span><span class="item-tag moved">→ Sprint #5</span></li>
+          <li><span class="status-dot red"></span><span class="item-text">TA sequence creation, C-level list, launch</span><span class="item-tag moved">→ Sprint #5</span></li>
+          <li><span class="status-dot red"></span><span class="item-text">Q1 leads reactivation sequence</span><span class="item-tag moved">→ Sprint #5</span></li>
+          <li><span class="status-dot red"></span><span class="item-text">Social engagement playbook &amp; workflow</span><span class="item-tag moved">→ Sprint #5</span></li>
+          <li><span class="status-dot red"></span><span class="item-text">Claude Skill Lead Magnet promo + launch</span><span class="item-tag moved">→ Sprint #5</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RISKS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fee2e2">⚠️</div>
+      <div>
+        <div class="section-title">Risks &amp; Dependencies</div>
+        <div class="section-subtitle">Items requiring attention before Q2 closes</div>
+      </div>
+    </div>
+    <div class="risk-list">
+      <div class="risk-item">
+        <span class="risk-icon">🔴</span>
+        <div><strong>Traffic KR at 28%</strong> — Remaining Solutions, SEO/FAQ, and Platform pages are the last findability levers before Q2 closes. All on tight publish windows (June 9–11). Any slip directly impacts the KR.</div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-icon">🟡</span>
+        <div><strong>Case studies KR at 1/3</strong> — Patreon and Getnet are awaiting external approval. Nubank is delayed. None of these are fully within team control for Q2 close.</div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-icon">🟡</span>
+        <div><strong>G2 at 80% (12/15)</strong> — Positive momentum, but the final 3 reviews depend on CS/HAWKS responsiveness this week. High-touch coordination needed.</div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-icon">🟠</span>
+        <div><strong>Demand gen carryover</strong> — TA sequences and lead enrichment moved to Sprint #5. This gap compounds if Q2 lead pipeline isn't closed out via webinar + event follow-up.</div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-icon">🟠</span>
+        <div><strong>Content calendar slippage</strong> — Blog Week 2 still unpublished; month plan review with Pat delayed. Risks compounding into Sprint #5.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- NEXT WEEK PRIORITIES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#f0fdf4">🎯</div>
+      <div>
+        <div class="section-title">Recommended Next-Week Priorities</div>
+        <div class="section-subtitle">Sprint #5 kick-off focus areas</div>
+      </div>
+    </div>
+    <div class="priorities">
+      <div class="priority-item">
+        <div class="priority-num">1</div>
+        <div class="priority-content">
+          <div class="priority-title">Publish PT Solutions + Resources pages</div>
+          <div class="priority-desc">CX Leaders (June 9), Quality Leaders (June 10), all 7 Success Stories (June 10) — must land on time to move the traffic KR.</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-num">2</div>
+        <div class="priority-content">
+          <div class="priority-title">Publish EN Solutions by Industry</div>
+          <div class="priority-desc">Financial Services &amp; Services Marketplaces: images are ready (Cícero), copy validation is the only blocker. Unblock ASAP.</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-num">3</div>
+        <div class="priority-content">
+          <div class="priority-title">SEO/GEO FAQs — review &amp; publish by June 9</div>
+          <div class="priority-desc">Last findability lever for the sprint. Draft done (Bernardo delivered SEO/GEO-optimized FAQ doc); needs final review sign-off.</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-num">4</div>
+        <div class="priority-content">
+          <div class="priority-title">Close the G2 gap (3 reviews needed)</div>
+          <div class="priority-desc">Coordinate with CS + HAWKS for a final push this weekend. 80% is strong — a small push closes the KR.</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-num">5</div>
+        <div class="priority-content">
+          <div class="priority-title">Nubank VoC Case Study — get to approval stage</div>
+          <div class="priority-desc">Move draft to a shareable state before sprint closes. Case study KR depends on external approvals moving in parallel.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span><strong>Birdie Marketing</strong> — Q2 Sprint #4 Review</span>
+    <span>June 5, 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
