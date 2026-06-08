@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprint #5 Plan — June 8–19, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f4f0; color: #1a1a1a; font-size: 14px; line-height: 1.5; }
+
+  .page { max-width: 1100px; margin: 0 auto; padding: 40px 32px 80px; }
+
+  /* Header */
+  .header { margin-bottom: 36px; border-bottom: 2px solid #1a1a1a; padding-bottom: 24px; }
+  .header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .header-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #777; margin-bottom: 6px; }
+  .header-title { font-size: 28px; font-weight: 800; line-height: 1.15; }
+  .header-subtitle { font-size: 15px; color: #555; margin-top: 6px; }
+  .header-meta { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 18px; }
+  .meta-chip { background: #1a1a1a; color: #fff; font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 4px; }
+  .meta-chip.warning { background: #c9430a; }
+  .meta-chip.neutral { background: #555; }
+
+  /* Context banner */
+  .context-banner { background: #fff8e6; border: 1px solid #f0d070; border-left: 4px solid #e6a817; border-radius: 6px; padding: 14px 18px; margin-bottom: 28px; font-size: 13px; color: #5a4000; line-height: 1.6; }
+  .context-banner strong { font-weight: 700; }
+
+  /* OKR dashboard */
+  .okr-section { margin-bottom: 36px; }
+  .section-heading { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #777; margin-bottom: 12px; }
+  .okr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+  .okr-card { background: #fff; border: 1px solid #e0ddd6; border-radius: 8px; padding: 16px 18px; }
+  .okr-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; background: #1a1a1a; display: inline-block; padding: 2px 8px; border-radius: 3px; margin-bottom: 8px; }
+  .okr-tag.kr2 { background: #2a5c9a; }
+  .okr-tag.kr3 { background: #5a1a7a; }
+  .okr-title { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .okr-bars { display: flex; flex-direction: column; gap: 8px; }
+  .okr-bar-row { display: flex; flex-direction: column; gap: 4px; }
+  .okr-bar-label { display: flex; justify-content: space-between; font-size: 12px; }
+  .okr-bar-label span:last-child { font-weight: 700; }
+  .bar-track { height: 8px; background: #f0ede6; border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .bar-fill.red { background: #c9430a; }
+  .bar-fill.orange { background: #e6a817; }
+  .bar-fill.green { background: #2e7d32; }
+  .bar-fill.teal { background: #2a5c9a; }
+
+  /* Themes */
+  .themes-grid { display: flex; flex-direction: column; gap: 20px; }
+  .theme-card { background: #fff; border: 1px solid #e0ddd6; border-radius: 10px; overflow: hidden; }
+  .theme-header { display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid #f0ede6; }
+  .theme-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .theme-dot.purple { background: #7c3aed; }
+  .theme-dot.blue { background: #2a5c9a; }
+  .theme-dot.red { background: #c9430a; }
+  .theme-dot.teal { background: #0a7a6a; }
+  .theme-dot.orange { background: #e6a817; }
+  .theme-dot.green { background: #2e7d32; }
+  .theme-name { font-weight: 800; font-size: 15px; }
+  .theme-okr-tags { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+  .okr-pill { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 12px; border: 1px solid; }
+  .okr-pill.kr1 { border-color: #1a1a1a; color: #1a1a1a; background: #f5f4f0; }
+  .okr-pill.kr2 { border-color: #2a5c9a; color: #2a5c9a; background: #eef3fa; }
+  .okr-pill.kr3 { border-color: #5a1a7a; color: #5a1a7a; background: #f5eefa; }
+
+  .theme-body { padding: 0; }
+
+  /* Task table */
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: #f8f7f4; }
+  th { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #888; padding: 8px 16px; text-align: left; border-bottom: 1px solid #ede9e0; }
+  td { padding: 11px 16px; border-bottom: 1px solid #f0ede6; vertical-align: top; font-size: 13px; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover { background: #fafaf8; }
+
+  .task-title { font-weight: 600; }
+  .task-note { color: #666; font-size: 12px; margin-top: 3px; }
+
+  /* Timing badge */
+  .timing { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 4px; white-space: nowrap; }
+  .timing.today { background: #c9430a; color: #fff; }
+  .timing.w1 { background: #e6f0fa; color: #2a5c9a; }
+  .timing.w2 { background: #f5eefa; color: #5a1a7a; }
+  .timing.asap { background: #fff3e0; color: #b34a00; border: 1px solid #f0c070; }
+  .timing.rolling { background: #f0f0f0; color: #555; }
+  .timing.date { background: #1a1a1a; color: #fff; }
+
+  /* Priority */
+  .priority { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; }
+  .priority.must::before { content: "●"; color: #c9430a; }
+  .priority.should::before { content: "●"; color: #e6a817; }
+  .priority.nice::before { content: "●"; color: #2a5c9a; }
+  .priority.must { color: #c9430a; }
+  .priority.should { color: #e6a817; }
+  .priority.nice { color: #2a5c9a; }
+
+  /* Today badge special section */
+  .today-callout { background: #fef3ee; border: 1px solid #f5c4a0; border-left: 4px solid #c9430a; border-radius: 6px; padding: 14px 18px; margin-bottom: 20px; }
+  .today-callout .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #c9430a; margin-bottom: 6px; }
+  .today-callout p { font-size: 13px; color: #5a2000; }
+
+  /* Footer */
+  .footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid #e0ddd6; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: gap; gap: 16px; }
+  .footer-note { font-size: 12px; color: #888; max-width: 500px; }
+  .footer-stamp { font-size: 11px; font-weight: 700; color: #bbb; }
+
+  @media print {
+    body { background: #fff; }
+    .page { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <div class="header-label">Birdie Marketing · Q2 2026</div>
+        <div class="header-title">Sprint #5 Plan</div>
+        <div class="header-subtitle">June 8 – 19, 2026 &nbsp;·&nbsp; 10 working days</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-chip">Last full sprint of Q2</div>
+      <div class="meta-chip warning">Sprint #6 = 7 days + Q3 offsite</div>
+      <div class="meta-chip neutral">5 themes · 3 OKRs</div>
+    </div>
+  </div>
+
+  <!-- Context banner -->
+  <div class="context-banner">
+    <strong>Why this sprint matters:</strong> Sprint #6 runs June 23–30 alongside the Q3 planning offsite — it's a landing sprint, not an execution sprint. <strong>Everything that moves the needle on Q2 OKRs has to ship in the next 10 days.</strong> The website needs to be finished. The webinar campaign needs to be live. The TA sequence needs to be launched. There's no sprint #7.
+  </div>
+
+  <!-- OKR Dashboard -->
+  <div class="okr-section">
+    <div class="section-heading">OKR Pulse · as of Sprint #4 Review (June 5)</div>
+    <div class="okr-grid">
+
+      <div class="okr-card">
+        <div class="okr-tag">KR1 · Findability</div>
+        <div class="okr-title">US Website Traffic Growth</div>
+        <div class="okr-bars">
+          <div class="okr-bar-row">
+            <div class="okr-bar-label"><span>Active Users (target: 2,944)</span><span>810 · 28%</span></div>
+            <div class="bar-track"><div class="bar-fill red" style="width:28%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="okr-card">
+        <div class="okr-tag kr2">KR2 · Credibility</div>
+        <div class="okr-title">Case Studies + G2 Reviews</div>
+        <div class="okr-bars">
+          <div class="okr-bar-row">
+            <div class="okr-bar-label"><span>Case studies live (target: 3)</span><span>1 · 33%</span></div>
+            <div class="bar-track"><div class="bar-fill orange" style="width:33%"></div></div>
+          </div>
+          <div class="okr-bar-row">
+            <div class="okr-bar-label"><span>G2 reviews (target: 15)</span><span>12 · 80%</span></div>
+            <div class="bar-track"><div class="bar-fill teal" style="width:80%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="okr-card">
+        <div class="okr-tag kr3">KR3 · Demand Gen</div>
+        <div class="okr-title">Qualified US Leads</div>
+        <div class="okr-bars">
+          <div class="okr-bar-row">
+            <div class="okr-bar-label"><span>MQLs (target: 120)</span><span>62 · 52%</span></div>
+            <div class="bar-track"><div class="bar-fill orange" style="width:52%"></div></div>
+          </div>
+          <div class="okr-bar-row">
+            <div class="okr-bar-label"><span>TA Leads (target: 36)</span><span>24 · 67%</span></div>
+            <div class="bar-track"><div class="bar-fill green" style="width:67%"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Today callout -->
+  <div class="today-callout">
+    <div class="callout-label">🏆 Action Required Today — June 8</div>
+    <p>The Zendesk Relate World Cup jersey raffle closes today. Pick the winner, send communication, coordinate jersey logistics, publish the social post, and close the loop with a demo-count report from the campaign.</p>
+  </div>
+
+  <!-- Themes -->
+  <div class="section-heading">Sprint Themes</div>
+  <div class="themes-grid">
+
+    <!-- THEME 1: Website Finish Line -->
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-dot purple"></div>
+        <div class="theme-name">Theme 1 · Website Finish Line</div>
+        <div class="theme-okr-tags">
+          <span class="okr-pill kr1">KR1 · Findability</span>
+        </div>
+      </div>
+      <div class="theme-body">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:38%">Task</th>
+              <th style="width:16%">When</th>
+              <th style="width:12%">Priority</th>
+              <th>Notes / Dependencies</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="task-title">PT Solutions: CX Leaders page — publish</div>
+              </td>
+              <td><span class="timing date">June 9</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Pending from Sprint #4; agency delivery</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">EN Solutions by Industry: Financial Services — final review + publish</div>
+              </td>
+              <td><span class="timing date">June 9</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Images pending final review; unblock immediately</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">SEO/GEO FAQs — review + publish</div>
+              </td>
+              <td><span class="timing date">June 9</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Draft ready; needs review before publishing</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">PT Solutions: Quality Leaders page — publish</div>
+              </td>
+              <td><span class="timing date">June 10</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Agency delivery set for June 10</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">PT Resources: Success Stories (all 7) — publish</div>
+              </td>
+              <td><span class="timing date">June 10</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Agency delivery set for June 10</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">EN Solutions by Industry: Services Marketplaces — final review + publish</div>
+              </td>
+              <td><span class="timing date">June 10</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Same flow as Financial Services</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Webflow: Home & Platform page — publish</div>
+              </td>
+              <td><span class="timing date">June 11</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Flowchart approved for coding; agency final delivery</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Webflow: Solutions by Use Cases — publish</div>
+              </td>
+              <td><span class="timing date">June 11</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Approved for coding in Sprint #4</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Compare pages: write Chattermill + UnitQ copy</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Carried from Sprint #4 backlog; Enterpret design already done</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Compare pages: publish Chattermill + UnitQ</div>
+              </td>
+              <td><span class="timing w2">Week 2</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Depends on copy completion in Week 1</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Blog: "Beyond Customer Intelligence" — final edit + publish</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Was Week 2 of Sprint #4; cannot carry again</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Monthly content plan — review with Pat</div>
+              </td>
+              <td><span class="timing w2">Week 2</span></td>
+              <td><span class="priority should">Should</span></td>
+              <td>Delayed twice; needed to shape Sprint #6 content drops</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- THEME 2: Credibility Push -->
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-dot blue"></div>
+        <div class="theme-name">Theme 2 · Credibility Push</div>
+        <div class="theme-okr-tags">
+          <span class="okr-pill kr2">KR2 · Credibility</span>
+        </div>
+      </div>
+      <div class="theme-body">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:38%">Task</th>
+              <th style="width:16%">When</th>
+              <th style="width:12%">Priority</th>
+              <th>Notes / Dependencies</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="task-title">G2: final push — coordinate CS + HAWKS for last 3 reviews</div>
+              </td>
+              <td><span class="timing asap">ASAP · W1</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>At 12/15 (80%); 3 reviews left to hit target. CS + HAWKS outreach this week</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Patreon case study — unblock approval + publish</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Q&A done, draft sent for approval in Sprint #4. Follow up on status immediately</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Getnet case study — unblock approval + publish</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Sent for approval in Sprint #4. Chase this week</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Nubank VoC case study — finalize draft + send for approval</div>
+              </td>
+              <td><span class="timing w2">Week 2</span></td>
+              <td><span class="priority should">Should</span></td>
+              <td>Marked delayed in Sprint #4. External dependency — aim for approval, not publication</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Distribute published case studies to sales (Patreon, Getnet, KOHO)</div>
+              </td>
+              <td><span class="timing w2">Week 2</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Depends on Patreon/Getnet approval. KOHO already published — include in same send</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- THEME 3: Zendesk Relate Raffle Wrap -->
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-dot red"></div>
+        <div class="theme-name">Theme 3 · Zendesk Relate — Raffle Wrap</div>
+        <div class="theme-okr-tags">
+          <span class="okr-pill kr3">KR3 · Demand Gen</span>
+        </div>
+      </div>
+      <div class="theme-body">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:38%">Task</th>
+              <th style="width:16%">When</th>
+              <th style="width:12%">Priority</th>
+              <th>Notes / Dependencies</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="task-title">Pick World Cup jersey raffle winner</div>
+              </td>
+              <td><span class="timing today">Today · Jun 8</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Raffle closes today — pull winner from raffle list</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Send winner communication (email)</div>
+              </td>
+              <td><span class="timing today">Today · Jun 8</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Confirm shipping address, timeline, and personalize the message</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Coordinate jersey shipping logistics</div>
+              </td>
+              <td><span class="timing today">Today · Jun 8</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Confirm vendor/shipping and get tracking info to winner</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Publish social post — raffle winner announcement</div>
+              </td>
+              <td><span class="timing w1">This week</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Pending winner confirmation. Once confirmed, post on LinkedIn + Instagram. Tag winner if possible. Closes the Zendesk Relate social loop</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Raffle campaign report — demos driven</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority should">Should</span></td>
+              <td>How many demo requests did the raffle drive? Pull from Luma registrations + HubSpot activity</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- THEME 4: Podcast — Ronaldo Amá -->
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-dot teal"></div>
+        <div class="theme-name">Theme 4 · Podcast — Ronaldo Amá on "A Global Tech Podcast"</div>
+        <div class="theme-okr-tags">
+          <span class="okr-pill kr1">KR1 · Findability</span>
+        </div>
+      </div>
+      <div class="theme-body">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:38%">Task</th>
+              <th style="width:16%">When</th>
+              <th style="width:12%">Priority</th>
+              <th>Notes / Dependencies</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="task-title">Ronaldo records on "A Global Tech Podcast"</div>
+              </td>
+              <td><span class="timing date">June 10</span></td>
+              <td><span class="priority should">Should</span></td>
+              <td>Already scheduled for Wednesday. Bernardo to coordinate recording logistics (Riverside)</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Edit video cuts for LinkedIn / social (2–3 clips)</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority should">Should</span></td>
+              <td>Same-week turnaround — Bernardo. Reels format for LinkedIn. Move fast while relevant</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Publish social posts — episode announcement + highlights</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority should">Should</span></td>
+              <td>LinkedIn (Pat + Birdie page) + Instagram. Tag podcast host and show</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Add podcast episode to Resources page (website)</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority should">Should</span></td>
+              <td>Creates a findable URL that drives traffic. Part of the website-finish push</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Newsletter teaser / mention in next edition</div>
+              </td>
+              <td><span class="timing w2">Week 2</span></td>
+              <td><span class="priority should">Should</span></td>
+              <td>Include a short embed / quote + link to the full episode Resources page</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- THEME 5: DemandGen Engine -->
+    <div class="theme-card">
+      <div class="theme-header">
+        <div class="theme-dot green"></div>
+        <div class="theme-name">Theme 5 · DemandGen Engine</div>
+        <div class="theme-okr-tags">
+          <span class="okr-pill kr3">KR3 · Demand Gen</span>
+        </div>
+      </div>
+      <div class="theme-body">
+
+        <!-- Context strip for webinar -->
+        <div style="background:#fffbf0; padding:10px 16px; border-bottom: 1px solid #f0e8c0; font-size:12px; color:#5a4000;">
+          <strong>Webinar #3:</strong> "Customer Experience Doesn't Follow Your Org Chart" · Christen Spirocostas (fmr. VP CX at Verizon, Chewy, ChenMed) &nbsp;·&nbsp;
+          <strong>Luma:</strong> <a href="https://luma.com/wsqqsct4" style="color:#b34a00;">luma.com/wsqqsct4</a>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="width:38%">Task</th>
+              <th style="width:16%">When</th>
+              <th style="width:12%">Priority</th>
+              <th>Notes / Dependencies</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="task-title">Webinar #3: schedule planning call with Christen Spirocostas</div>
+              </td>
+              <td><span class="timing asap">ASAP · W1</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Confirm webinar date, format, run-of-show, and key talking points together</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Webinar #3: build campaign calendar — social, email, direct invites</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Map out 3–4 week promo arc: social cadence, email sequence (2–3 sends), TA direct outreach</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Webinar #3: create social assets + set up Luma confirmation emails</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Bernardo designs announcement visuals. Confirm Luma email copy and reminder cadence. Luma page already live</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Webinar #3: launch first social posts (LinkedIn + Instagram)</div>
+              </td>
+              <td><span class="timing w2">Week 2</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Pat + Birdie page. Include Luma link. Target: first 30+ registrations by EOQ</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Webinar #3: Email #1 — broadcast to full list</div>
+              </td>
+              <td><span class="timing w2">Week 2</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>ICP segment + TA list. Webinar topic, guest bio, Luma link</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Webinar #3: direct invites — Target Account outreach</div>
+              </td>
+              <td><span class="timing w2">Week 2</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Personalised LinkedIn DMs or 1:1 email to priority TA contacts. Coordinate with Sales</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">TA sequence — finalize copy + send for approval (Pat + Sales)</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Carried twice from Sprint #3–4. Copy needs update; Bernardo leads list confirmed</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">TA sequence — launch</div>
+              </td>
+              <td><span class="timing w2">Week 2</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Depends on approval. Highest-leverage demand gen action left in Q2</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Q1 leads re-engagement — build email sequence</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>CRM import list ready from Sprint #4. Write 2–3 email sequence before activating</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Q1 leads re-engagement — activate</div>
+              </td>
+              <td><span class="timing w2">Week 2</span></td>
+              <td><span class="priority must">Must</span></td>
+              <td>Goes out in Week 2. Warm ICP leads who haven't heard from us in Q2 yet</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Lead enrichment workflow — document + set up in Airtable</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority should">Should</span></td>
+              <td>Carried from Sprint #4 backlog. Clay waterfall process needs to be documented + running</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Email domain warming — initiate protocol</div>
+              </td>
+              <td><span class="timing w1">Week 1</span></td>
+              <td><span class="priority should">Should</span></td>
+              <td>Required before any outreach sequence. Document warming setup in lead playbook</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Social engagement playbook + workflow — complete</div>
+              </td>
+              <td><span class="timing w2">Week 2</span></td>
+              <td><span class="priority should">Should</span></td>
+              <td>Carried from Sprint #4 backlog. Systematises Pat's LinkedIn engagement → leads pipeline</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-title">Claude Skill Lead Magnet — promo strategy + launch</div>
+              </td>
+              <td><span class="timing w2">Week 2</span></td>
+              <td><span class="priority nice">Nice</span></td>
+              <td>Carried from Sprint #4. Define promo angle and channel; soft launch to list</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /themes-grid -->
+
+  <!-- Sprint Calendar Summary -->
+  <div style="margin-top: 36px;">
+    <div class="section-heading">Sprint Calendar at a Glance</div>
+    <div style="background:#fff; border:1px solid #e0ddd6; border-radius:10px; overflow:hidden;">
+      <table style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr style="background:#f8f7f4;">
+            <th style="padding:10px 16px; text-align:left; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#888; border-bottom:1px solid #ede9e0; width:14%">Date</th>
+            <th style="padding:10px 16px; text-align:left; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#888; border-bottom:1px solid #ede9e0; width:16%">Theme</th>
+            <th style="padding:10px 16px; text-align:left; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#888; border-bottom:1px solid #ede9e0;">Key Events / Deadlines</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:#fef3ee;">
+            <td style="padding:10px 16px; font-weight:700; font-size:13px; border-bottom:1px solid #f0ede6;">Mon Jun 8</td>
+            <td style="padding:10px 16px; font-size:12px; border-bottom:1px solid #f0ede6;"><span style="color:#c9430a; font-weight:700;">Theme 3</span></td>
+            <td style="padding:10px 16px; font-size:13px; border-bottom:1px solid #f0ede6;">🏆 Raffle winner picked · Winner communication sent · Shipping coordinated · Social post once winner confirms</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px; font-weight:700; font-size:13px; border-bottom:1px solid #f0ede6;">Tue Jun 9</td>
+            <td style="padding:10px 16px; font-size:12px; border-bottom:1px solid #f0ede6;"><span style="color:#7c3aed; font-weight:700;">Theme 1</span></td>
+            <td style="padding:10px 16px; font-size:13px; border-bottom:1px solid #f0ede6;">PT CX Leaders published · EN Financial Services published · SEO FAQs published</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px; font-weight:700; font-size:13px; border-bottom:1px solid #f0ede6;">Wed Jun 10</td>
+            <td style="padding:10px 16px; font-size:12px; border-bottom:1px solid #f0ede6;"><span style="color:#7c3aed; font-weight:700;">Theme 1</span> + <span style="color:#0a7a6a; font-weight:700;">Theme 4</span></td>
+            <td style="padding:10px 16px; font-size:13px; border-bottom:1px solid #f0ede6;">PT Quality Leaders + Success Stories published · EN Services Marketplaces published · 🎙️ Ronaldo records "A Global Tech Podcast"</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px; font-weight:700; font-size:13px; border-bottom:1px solid #f0ede6;">Thu Jun 11</td>
+            <td style="padding:10px 16px; font-size:12px; border-bottom:1px solid #f0ede6;"><span style="color:#7c3aed; font-weight:700;">Theme 1</span></td>
+            <td style="padding:10px 16px; font-size:13px; border-bottom:1px solid #f0ede6;">🚀 Webflow Home & Platform page live · Solutions by Use Cases live · Blog "Beyond CX Intelligence" published</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px; font-weight:700; font-size:13px; border-bottom:1px solid #f0ede6;">Fri Jun 12</td>
+            <td style="padding:10px 16px; font-size:12px; border-bottom:1px solid #f0ede6;"><span style="color:#0a7a6a; font-weight:700;">Theme 4</span> + <span style="color:#2a5c9a; font-weight:700;">Theme 2</span></td>
+            <td style="padding:10px 16px; font-size:13px; border-bottom:1px solid #f0ede6;">Podcast video clips + social posts + Resources page update · G2 push deadline (last push to CS/HAWKS)</td>
+          </tr>
+          <tr style="background:#fafaf8;">
+            <td style="padding:8px 16px; font-size:12px; color:#888; border-bottom:1px solid #f0ede6;" colspan="3">— Weekend —</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px; font-weight:700; font-size:13px; border-bottom:1px solid #f0ede6;">Mon Jun 15</td>
+            <td style="padding:10px 16px; font-size:12px; border-bottom:1px solid #f0ede6;"><span style="color:#2e7d32; font-weight:700;">Theme 5</span></td>
+            <td style="padding:10px 16px; font-size:13px; border-bottom:1px solid #f0ede6;">Webinar #3: first social posts live + Email #1 sent · TA sequence approved + launched · Q1 leads re-engagement goes out</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px; font-weight:700; font-size:13px; border-bottom:1px solid #f0ede6;">Tue Jun 16</td>
+            <td style="padding:10px 16px; font-size:12px; border-bottom:1px solid #f0ede6;"><span style="color:#7c3aed; font-weight:700;">Theme 1</span> + <span style="color:#2a5c9a; font-weight:700;">Theme 2</span></td>
+            <td style="padding:10px 16px; font-size:13px; border-bottom:1px solid #f0ede6;">Compare pages (Chattermill + UnitQ) published · Patreon/Getnet case studies published (if approved)</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px; font-weight:700; font-size:13px; border-bottom:1px solid #f0ede6;">Wed Jun 17</td>
+            <td style="padding:10px 16px; font-size:12px; border-bottom:1px solid #f0ede6;">Events</td>
+            <td style="padding:10px 16px; font-size:13px; border-bottom:1px solid #f0ede6;">📍 CX Leaders Night (off-sprint event) — marketing coordination</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px; font-weight:700; font-size:13px; border-bottom:1px solid #f0ede6;">Thu Jun 18</td>
+            <td style="padding:10px 16px; font-size:12px; border-bottom:1px solid #f0ede6;"><span style="color:#2a5c9a; font-weight:700;">Theme 2</span> + <span style="color:#2e7d32; font-weight:700;">Theme 6</span></td>
+            <td style="padding:10px 16px; font-size:13px; border-bottom:1px solid #f0ede6;">Distribute case studies to sales · Webinar direct TA invites sent · Social engagement workflow complete</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px; font-weight:700; font-size:13px; border-bottom:1px solid #f0ede6;">Fri Jun 19</td>
+            <td style="padding:10px 16px; font-size:12px; border-bottom:1px solid #f0ede6;">Sprint #5 Review</td>
+            <td style="padding:10px 16px; font-size:13px; border-bottom:1px solid #f0ede6;">Sprint review · OKR pulse check · Sprint #6 backlog + Q3 planning inputs prepared</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Priority legend -->
+  <div style="margin-top: 28px; display: flex; gap: 24px; flex-wrap: wrap; align-items: center;">
+    <div style="font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#888;">Priority key:</div>
+    <div style="display:flex; gap:18px; flex-wrap:wrap;">
+      <span class="priority must" style="font-size:12px;">Must — directly moves a Q2 KR</span>
+      <span class="priority should" style="font-size:12px;">Should — important, Q3 set-up risk if missed</span>
+      <span class="priority nice" style="font-size:12px;">Nice — valuable but deferrable to Sprint #6</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-note">Assignees and story points to be confirmed in sprint planning. Sprint #6 (June 23–30) runs in parallel with the Q3 planning offsite — treat this sprint as the real Q2 close.</div>
+    <div class="footer-stamp">Birdie Marketing · Sprint #5 · June 8–19, 2026</div>
+  </div>
+
+</div>
+</body>
+</html>
